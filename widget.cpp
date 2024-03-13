@@ -35,6 +35,8 @@ Widget::Widget(QWidget *parent)
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Widget::updateTimer);
     //timer->start(1000);
+
+    cargoHead = nullptr;
 }
 
 //Deconstructor
@@ -43,6 +45,24 @@ Widget::~Widget()
     delete ui;
     delete timer;
     delete selectedShip;
+    deleteCargoHold();
+}
+
+void Widget::deleteCargoHold()
+{
+    if(cargoHead == nullptr)
+    {
+        return;
+    }
+
+    Cargo* tempPtr;
+    while (cargoHead != nullptr)
+    {
+        tempPtr = cargoHead;
+        cargoHead = tempPtr->next;
+        delete tempPtr;
+        tempPtr = nullptr;
+    }
 }
 
 void Widget::updateTimer()
@@ -121,4 +141,26 @@ void Widget::on_endButton_clicked()
 
     timer->stop();
 }
+
+
+void Widget::on_buyButton_clicked()
+{
+    if(ui->cargoNamelineEdit->isModified())
+    {
+        Cargo* ptr;
+        ptr = new Cargo;
+        ptr->name = ui->cargoNamelineEdit->text();
+        ptr->pricePerUnit = ui->priceDoubleSpinBox->value();
+        ptr->amount = ui->amountSpinBox->value();
+        ptr->value = ptr->amount * ptr->pricePerUnit;
+
+        ptr->next = cargoHead;
+        cargoHead = ptr;
+
+        currentBal -= cargoHead->value;
+        ui->editCurrentBalanceLabel->setText(QString::number(currentBal) + " aUEC");
+    }
+
+}
+
 

@@ -11,6 +11,14 @@ class Widget;
 }
 QT_END_NAMESPACE
 
+struct Cargo{
+    QString name;
+    double  pricePerUnit;
+    double  value;
+    int     amount;
+    Cargo*  next;
+};
+
 struct Ship{
     QString name;
     int     cargoCap;
@@ -23,24 +31,31 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-public slots:
-    void updateTimer();
+
 
 private:
-    Ui::Widget *ui;
-    Ship* selectedShip;
-    double startingBal;
-    double currentBal;
-    bool   runStopWatch;
-    int    hr;
-    int    min;
-    int    sec;
-    QTimer* timer;
+    Ui::Widget* ui;
+    QTimer*     timer;
+    Ship*       selectedShip;
+    Cargo*      cargoHead;
+    double      startingBal;
+    double      currentBal;
+    bool        runStopWatch;
+    int         hr;
+    int         min;
+    int         sec;
+
+    void deleteCargoHold();
+
+
+public slots:
+    void updateTimer();
 
 private slots:
     void on_shipNamelineEdit_returnPressed();
     void on_startBalDoubleSpinBox_valueChanged(double arg1);
     void on_beginButton_clicked();
     void on_endButton_clicked();
+    void on_buyButton_clicked();
 };
 #endif // WIDGET_H
