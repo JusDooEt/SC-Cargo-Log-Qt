@@ -19,15 +19,18 @@ Widget::Widget(QWidget *parent)
     ui->sellButton->setDisabled(true);
     ui->sellAllButton->setDisabled(true);
     ui->endButton->setDisabled(true);
-
+    // ui->currentBalanceLabel->setTextFormat(Qt::FixedNotation)
 
 
     // Initialize Ship Object
     selectedShip = new Ship;
     selectedShip->name = ui->shipNamelineEdit->text();
     selectedShip->cargoCap = ui->cargoCapSpinBox->value();
+    selectedShip->currentCap = 0;
 
     runStopWatch = false;
+    sellAll      = false;
+    totalValue = 0;
 
     hr = 00;
     min = 00;
@@ -37,6 +40,13 @@ Widget::Widget(QWidget *parent)
     //timer->start(1000);
 
     cargoHead = nullptr;
+
+    //For testing purposes
+
+    startingBal = 10000000;
+    currentBal  = startingBal;
+    ui->startBalDoubleSpinBox->setValue(startingBal);
+    ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
 }
 
 //Deconstructor
@@ -93,7 +103,7 @@ void Widget::updateTimer()
 void Widget::on_shipNamelineEdit_returnPressed()
 {
     selectedShip->name = ui->shipNamelineEdit->text();
-    qDebug() << "selectedShip.name = " << selectedShip->name;
+    //qDebug() << "selectedShip.name = " << selectedShip->name;
 }
 
 // If startBalDoubleSpinBox value is changed:
@@ -102,14 +112,15 @@ void Widget::on_startBalDoubleSpinBox_valueChanged(double arg1)
 {
     startingBal = ui->startBalDoubleSpinBox->value();
     currentBal = startingBal;
-    ui->editCurrentBalanceLabel->setText(QString::number(currentBal) + " aUEC");
-    qDebug() << "startingBal = " << startingBal;
-    qDebug() << "CurrentBal = " << currentBal;
+    ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
+    // qDebug() << "startingBal = " << startingBal;
+    // qDebug() << "CurrentBal = " << currentBal;
 }
 
 
 void Widget::on_beginButton_clicked()
 {
+    // Ui assest formatting
     ui->endButton->setDisabled(false);
 
     ui->startBalDoubleSpinBox->setDisabled(true);
@@ -121,7 +132,19 @@ void Widget::on_beginButton_clicked()
     ui->amountSpinBox->setDisabled(false);
     ui->buyButton->setDisabled(false);
 
+    // reset clock values;
+    hr = 0;
+    min = 0;
+    sec = 0;
+
+
+    // start the stop watch
     timer->start(1000);
+
+    selectedShip->name = ui->shipNamelineEdit->text();
+    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
+    selectedShip->currentCap = 0;
+    ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
 }
 
 
@@ -139,6 +162,7 @@ void Widget::on_endButton_clicked()
     ui->buyButton->setDisabled(true);
     ui->endButton->setDisabled(true);
 
+    // stop the stop watch
     timer->stop();
 }
 
@@ -147,20 +171,98 @@ void Widget::on_buyButton_clicked()
 {
     if(ui->cargoNamelineEdit->isModified())
     {
+        bool valid = false;
+
         Cargo* ptr;
+        QString cargoDesc = "";
         ptr = new Cargo;
         ptr->name = ui->cargoNamelineEdit->text();
         ptr->pricePerUnit = ui->priceDoubleSpinBox->value();
         ptr->amount = ui->amountSpinBox->value();
         ptr->value = ptr->amount * ptr->pricePerUnit;
 
+        valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
+                 ptr->value  <= currentBal);
+
+        if(!valid)
+        {
+            cargoBuyError = new QDialog(this);
+
+            cargoBuyError->setWindowModality(Qt::WindowModality::ApplicationModal);
+            cargoBuyError->setMinimumSize(400,100);
+
+
+            QLabel* errorMsgLabel = new QLabel(cargoBuyError);
+            errorMsgLabel->setText("Error with purchase. (Please check cargo hold and current balance)");
+            errorMsgLabel->setAlignment(Qt::AlignCenter);
+            errorMsgLabel->setGeometry(0,20,400,20);
+            errorMsgLabel->show();
+
+            QPushButton* okButton = new QPushButton(cargoBuyError);
+            connect(okButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+            okButton->setText("OK");
+            okButton->setGeometry(175,50, 50,25);
+            okButton->show();
+
+            cargoBuyError->show();
+            return;
+        }
+
         ptr->next = cargoHead;
         cargoHead = ptr;
 
         currentBal -= cargoHead->value;
-        ui->editCurrentBalanceLabel->setText(QString::number(currentBal) + " aUEC");
+        totalValue += cargoHead->value;
+        selectedShip->currentCap += cargoHead->amount / 100;
+
+        ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
+        ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
+        ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+        cargoDesc = (cargoHead->name +
+                    "\nAmount: " + QString::number(cargoHead->amount) +
+                    "\nPrice per UNIT: " + QString::number(cargoHead->pricePerUnit) + " aUEC"
+                    "\nValue: " + QString("%1 aUEC").arg(cargoHead->value, 0, 'f', 2) +
+                    "\n\n--------------------------------------------------\n\n");
+        ui->cargoHoldTextEdit->append(cargoDesc);
+
+        // if(!ui->sellButton->isEnabled())
+        //     ui->sellButton->setEnabled(true);
+        if(!ui->sellAllButton->isEnabled())
+            ui->sellAllButton->setEnabled(true);
     }
 
 }
 
+void Widget::on_okButton_clicked()
+{
+    cargoBuyError->close();
+}
+
+
+
+
+
+void Widget::on_sellAllButton_clicked()
+{
+    sellAll = false;
+    sellAllDialog = new QDialog(this);
+    sellAllDialog->setWindowModality(Qt::WindowModality::ApplicationModal);
+    sellAllDialog->setMinimumSize(400,100);
+
+    QLabel* sellAllDialogLabel = new QLabel(sellAllDialog);
+    sellAllDialogLabel->setText("Do you want to sell all your cargo and end your run?");
+    sellAllDialogLabel->show();
+
+    QPushButton* yesButton = new QPushButton(sellAllDialog);
+    connect(yesButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+    yesButton->setText("Yes");
+    yesButton->setGeometry(175,50, 50,25);
+    yesButton->show();
+
+    QPushButton* noButton = new QPushButton(sellAllDialog);
+    connect(yesButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+    noButton->setText("Yes");
+    noButton->setGeometry(175,50, 50,25);
+    noButton->show();
+}
 

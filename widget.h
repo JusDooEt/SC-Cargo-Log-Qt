@@ -1,6 +1,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <QDialog>
 #include <QWidget>
 #include <QDebug>
 #include <QTimer>
@@ -22,6 +23,7 @@ struct Cargo{
 struct Ship{
     QString name;
     int     cargoCap;
+    int     currentCap;
 };
 
 class Widget : public QWidget
@@ -35,15 +37,19 @@ public:
 
 private:
     Ui::Widget* ui;
+    QDialog*    cargoBuyError;
+    QDialog*    sellAllDialog;
     QTimer*     timer;
     Ship*       selectedShip;
     Cargo*      cargoHead;
     double      startingBal;
     double      currentBal;
     bool        runStopWatch;
+    bool        sellAll;
     int         hr;
     int         min;
     int         sec;
+    double         totalValue;
 
     void deleteCargoHold();
 
@@ -57,5 +63,7 @@ private slots:
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
+    void on_okButton_clicked();
+    void on_sellAllButton_clicked();
 };
 #endif // WIDGET_H

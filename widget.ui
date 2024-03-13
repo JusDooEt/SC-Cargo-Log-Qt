@@ -53,6 +53,12 @@
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
+      <property name="maximum">
+       <number>999999999</number>
+      </property>
+      <property name="singleStep">
+       <number>100</number>
+      </property>
      </widget>
     </item>
     <item>
@@ -185,7 +191,7 @@
     </font>
    </property>
    <property name="text">
-    <string>0 aUEC</string>
+    <string>0.00 aUEC</string>
    </property>
   </widget>
   <widget class="QLabel" name="profitLabel">
@@ -221,7 +227,7 @@
     </font>
    </property>
    <property name="text">
-    <string>0 aUEC</string>
+    <string>0.00 aUEC</string>
    </property>
   </widget>
   <widget class="QLabel" name="valueLabel">
@@ -311,7 +317,7 @@
     </font>
    </property>
    <property name="text">
-    <string>0/0 SCU</string>
+    <string>0 / 0 SCU</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -322,17 +328,17 @@
     <rect>
      <x>670</x>
      <y>10</y>
-     <width>51</width>
+     <width>111</width>
      <height>22</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>0 aUEC</string>
+    <string>0.00 aUEC</string>
    </property>
   </widget>
   <widget class="QLabel" name="hoursLabel">
@@ -383,7 +389,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -413,6 +419,9 @@
       <property name="maximum">
        <number>9999999</number>
       </property>
+      <property name="singleStep">
+       <number>5</number>
+      </property>
      </widget>
     </item>
     <item>
@@ -424,7 +433,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -451,7 +460,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -478,12 +487,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>21</x>
      <y>370</y>
-     <width>261</width>
+     <width>270</width>
      <height>24</height>
     </rect>
    </property>
@@ -504,6 +513,9 @@
      <widget class="QDoubleSpinBox" name="priceDoubleSpinBox">
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="maximum">
+       <double>999999999999.000000000000000</double>
       </property>
      </widget>
     </item>
@@ -555,6 +567,9 @@
    <property name="maximum">
     <double>1000000000000000000.000000000000000</double>
    </property>
+   <property name="singleStep">
+    <double>100.000000000000000</double>
+   </property>
   </widget>
   <widget class="QLabel" name="auecLabel">
    <property name="geometry">
@@ -569,7 +584,7 @@
     <string>  aUEC</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>
