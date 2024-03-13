@@ -1,4 +1,4 @@
-#SC-Cargo-Log w/ QtCreator
+# SC-Cargo-Log w/ QtCreator
 ## Current build
 ![build-imageV1](res/images/build-imageV1.PNG)
 
