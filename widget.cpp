@@ -186,25 +186,27 @@ void Widget::on_buyButton_clicked()
 
         if(!valid)
         {
-            cargoBuyError = new QDialog(this);
+            cargoBuyError = new BuyErrorDialog(this);
 
             cargoBuyError->setWindowModality(Qt::WindowModality::ApplicationModal);
-            cargoBuyError->setMinimumSize(400,100);
-
-
-            QLabel* errorMsgLabel = new QLabel(cargoBuyError);
-            errorMsgLabel->setText("Error with purchase. (Please check cargo hold and current balance)");
-            errorMsgLabel->setAlignment(Qt::AlignCenter);
-            errorMsgLabel->setGeometry(0,20,400,20);
-            errorMsgLabel->show();
-
-            QPushButton* okButton = new QPushButton(cargoBuyError);
-            connect(okButton, &QPushButton::clicked, this, &Widget::onOkButtonClicked);
-            okButton->setText("OK");
-            okButton->setGeometry(175,50, 50,25);
-            okButton->show();
-
             cargoBuyError->show();
+            // cargoBuyError->setMinimumSize(400,100);
+
+
+            // QLabel* errorMsgLabel = new QLabel(cargoBuyError);
+            // errorMsgLabel->setText("Error with purchase. (Please check cargo hold and current balance)");
+            // errorMsgLabel->setAlignment(Qt::AlignCenter);
+            // errorMsgLabel->setGeometry(0,20,400,20);
+            // errorMsgLabel->show();
+
+            // QPushButton* okButton = new QPushButton(cargoBuyError);
+            // connect(okButton, &QPushButton::clicked, this, &Widget::onOkButtonClicked);
+            // okButton->setText("OK");
+            // okButton->setGeometry(175,50, 50,25);
+            // okButton->show();
+
+            // cargoBuyError->show();
+
             return;
         }
 

@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QDebug>
 #include <QTimer>
+#include "buyerrordialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,7 +38,7 @@ public:
 
 private:
     Ui::Widget* ui;
-    QDialog*    cargoBuyError;
+    BuyErrorDialog*    cargoBuyError;
     QDialog*    sellAllDialog;
     QTimer*     timer;
     Ship*       selectedShip;
