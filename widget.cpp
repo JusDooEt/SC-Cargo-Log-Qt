@@ -199,7 +199,7 @@ void Widget::on_buyButton_clicked()
             errorMsgLabel->show();
 
             QPushButton* okButton = new QPushButton(cargoBuyError);
-            connect(okButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+            connect(okButton, &QPushButton::clicked, this, &Widget::onOkButtonClicked);
             okButton->setText("OK");
             okButton->setGeometry(175,50, 50,25);
             okButton->show();
@@ -233,7 +233,7 @@ void Widget::on_buyButton_clicked()
 
 }
 
-void Widget::on_okButton_clicked()
+void Widget::onOkButtonClicked()
 {
     cargoBuyError->close();
 }
@@ -254,15 +254,27 @@ void Widget::on_sellAllButton_clicked()
     sellAllDialogLabel->show();
 
     QPushButton* yesButton = new QPushButton(sellAllDialog);
-    connect(yesButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+    connect(yesButton, &QPushButton::clicked, this, &Widget::onYesButtonClicked);
     yesButton->setText("Yes");
     yesButton->setGeometry(175,50, 50,25);
     yesButton->show();
 
     QPushButton* noButton = new QPushButton(sellAllDialog);
-    connect(yesButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+    connect(noButton, &QPushButton::clicked, this, &Widget::onNoButtonClicked);
     noButton->setText("Yes");
     noButton->setGeometry(175,50, 50,25);
     noButton->show();
+
+    sellAllDialog->show();
+}
+
+void Widget::onNoButtonClicked()
+{
+
+}
+
+void Widget::onYesButtonClicked()
+{
+
 }
 

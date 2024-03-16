@@ -54,6 +54,7 @@ private:
     void deleteCargoHold();
 
 
+
 public slots:
     void updateTimer();
 
@@ -63,7 +64,9 @@ private slots:
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
-    void on_okButton_clicked();
+    void onOkButtonClicked();
     void on_sellAllButton_clicked();
+    void onNoButtonClicked();
+    void onYesButtonClicked();
 };
 #endif // WIDGET_H
