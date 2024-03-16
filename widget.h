@@ -68,7 +68,7 @@ private slots:
     void on_buyButton_clicked();
     void on_okButton_clicked();
     void on_sellAllButton_clicked();
-    void on_yesDialongButton_clicked();
+    void on_yesDialogButton_clicked();
     void on_cargoCapSpinBox_valueChanged(int arg1);
 };
 #endif // WIDGET_H

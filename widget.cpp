@@ -254,7 +254,7 @@ void Widget::on_sellAllButton_clicked()
     sellAllDialogLabel->show();
 
     QPushButton* yesButton = new QPushButton(sellAllDialog);
-    connect(yesButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+    //connect(yesButton, &QPushButton::clicked, this, &Widget::on_yesDialogButton_clicked);
     yesButton->setText("Yes");
     yesButton->setGeometry(175,50, 50,25);
     yesButton->show();
@@ -264,12 +264,14 @@ void Widget::on_sellAllButton_clicked()
         if(sellAllDialog->isEnabled())
             sellAllDialog->close();
     });
-    noButton->setText("Yes");
+    noButton->setText("No");
     noButton->setGeometry(175,50, 50,25);
     noButton->show();
+
+    sellAllDialog->show();
 }
 
-void Widget::on_yesDialongButton_clicked()
+void Widget::on_yesDialogButton_clicked()
 {
     sellAllPriceDialog = new QDialog(this);
     sellAllPriceDialog->setWindowModality(Qt::WindowModality::ApplicationModal);
@@ -287,11 +289,11 @@ void Widget::on_yesDialongButton_clicked()
     auecLabel->setText(" auec");
     auecLabel->show();
 
-    QHBoxLayout* priceFormat = new QHBoxLayout(sellAllPriceDialog);
-    priceFormat->addWidget(sellAllPriceLabel);
-    priceFormat->addWidget(sellAllDoubleSpinBox);
-    priceFormat->addWidget(auecLabel);
-    priceFormat->setEnabled(true);
+    // QHBoxLayout* priceFormat = new QHBoxLayout(sellAllPriceDialog);
+    // priceFormat->addWidget(sellAllPriceLabel);
+    // priceFormat->addWidget(sellAllDoubleSpinBox);
+    // priceFormat->addWidget(auecLabel);
+    // priceFormat->setEnabled(true);
 
     QPushButton* confirmButton = new QPushButton(sellAllPriceDialog);
     connect(confirmButton, &QPushButton::clicked, this, [=](){
@@ -318,6 +320,7 @@ void Widget::on_yesDialongButton_clicked()
 
         sellAllPriceDialog->close();
         sellAllDialog->close();
+        deleteCargoHold();
     });
     confirmButton->setText("Confirm");
     confirmButton->setGeometry(175,50, 50,25);
@@ -332,20 +335,22 @@ void Widget::on_yesDialongButton_clicked()
     cancelButton->setGeometry(175,50, 50,25);
     cancelButton->show();
 
-    QHBoxLayout* dialogButtons = new QHBoxLayout(sellAllPriceDialog);
-    dialogButtons->addWidget(confirmButton);
-    dialogButtons->addWidget(cancelButton);
-    dialogButtons->setEnabled(true);
+    // QHBoxLayout* dialogButtons = new QHBoxLayout(sellAllPriceDialog);
+    // dialogButtons->addWidget(confirmButton);
+    // dialogButtons->addWidget(cancelButton);
+    // dialogButtons->setEnabled(true);
 
-    QVBoxLayout* sellAllPriceLayout = new QVBoxLayout(sellAllPriceDialog);
-    sellAllPriceLayout->addItem(priceFormat);
-    sellAllPriceLayout->addItem(dialogButtons);
-    sellAllPriceLayout->setEnabled(true);
+    // QVBoxLayout* sellAllPriceLayout = new QVBoxLayout(sellAllPriceDialog);
+    // sellAllPriceLayout->addItem(priceFormat);
+    // sellAllPriceLayout->addItem(dialogButtons);
+    // sellAllPriceLayout->setEnabled(true);
+
+    sellAllPriceDialog->show();
 }
 
 
 void Widget::on_cargoCapSpinBox_valueChanged(int arg1)
 {
-    selectedShip->cargoCap = arg1;
+    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
 }
 
