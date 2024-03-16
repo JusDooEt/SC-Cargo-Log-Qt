@@ -39,6 +39,7 @@ private:
     Ui::Widget* ui;
     QDialog*    cargoBuyError;
     QDialog*    sellAllDialog;
+    QDialog*    sellAllPriceDialog;
     QTimer*     timer;
     Ship*       selectedShip;
     Cargo*      cargoHead;
@@ -49,7 +50,9 @@ private:
     int         hr;
     int         min;
     int         sec;
-    double         totalValue;
+    double      totalValue;
+    double      sellAllPrice;
+    double      profit;
 
     void deleteCargoHold();
 
@@ -65,5 +68,7 @@ private slots:
     void on_buyButton_clicked();
     void on_okButton_clicked();
     void on_sellAllButton_clicked();
+    void on_yesDialongButton_clicked();
+    void on_cargoCapSpinBox_valueChanged(int arg1);
 };
 #endif // WIDGET_H

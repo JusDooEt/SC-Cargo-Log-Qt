@@ -244,7 +244,7 @@ void Widget::on_okButton_clicked()
 
 void Widget::on_sellAllButton_clicked()
 {
-    sellAll = false;
+    //sellAll = false;
     sellAllDialog = new QDialog(this);
     sellAllDialog->setWindowModality(Qt::WindowModality::ApplicationModal);
     sellAllDialog->setMinimumSize(400,100);
@@ -260,9 +260,92 @@ void Widget::on_sellAllButton_clicked()
     yesButton->show();
 
     QPushButton* noButton = new QPushButton(sellAllDialog);
-    connect(yesButton, &QPushButton::clicked, this, &Widget::on_okButton_clicked);
+    connect(noButton, &QPushButton::clicked, this, [=](){
+        if(sellAllDialog->isEnabled())
+            sellAllDialog->close();
+    });
     noButton->setText("Yes");
     noButton->setGeometry(175,50, 50,25);
     noButton->show();
+}
+
+void Widget::on_yesDialongButton_clicked()
+{
+    sellAllPriceDialog = new QDialog(this);
+    sellAllPriceDialog->setWindowModality(Qt::WindowModality::ApplicationModal);
+    sellAllPriceDialog->setMinimumSize(600,100);
+
+    QLabel* sellAllPriceLabel = new QLabel(sellAllPriceDialog);
+    sellAllPriceLabel->setText("Sell All Value: ");
+    sellAllPriceLabel->show();
+
+    QDoubleSpinBox* sellAllDoubleSpinBox = new QDoubleSpinBox(sellAllPriceDialog);
+    sellAllDoubleSpinBox->setValue(0.00);
+    sellAllDoubleSpinBox->show();
+
+    QLabel* auecLabel = new QLabel(sellAllPriceDialog);
+    auecLabel->setText(" auec");
+    auecLabel->show();
+
+    QHBoxLayout* priceFormat = new QHBoxLayout(sellAllPriceDialog);
+    priceFormat->addWidget(sellAllPriceLabel);
+    priceFormat->addWidget(sellAllDoubleSpinBox);
+    priceFormat->addWidget(auecLabel);
+    priceFormat->setEnabled(true);
+
+    QPushButton* confirmButton = new QPushButton(sellAllPriceDialog);
+    connect(confirmButton, &QPushButton::clicked, this, [=](){
+        if(sellAllDoubleSpinBox->value() > totalValue)
+        {
+           sellAllPrice = sellAllDoubleSpinBox->value();
+        }
+
+        ui->buyButton->setDisabled(true);
+        ui->sellAllButton->setDisabled(true);
+        ui->sellButton->setDisabled(true);
+        profit = sellAllPrice - totalValue;
+        ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+        selectedShip->currentCap = 0;
+        ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap)
+                                         + " SCU");
+        ui->cargoHoldTextEdit->clear();
+        totalValue = 0;
+        ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
+        currentBal += sellAllPrice;
+        ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
+        startingBal = currentBal;
+        ui->startBalDoubleSpinBox->setValue(startingBal);
+
+        sellAllPriceDialog->close();
+        sellAllDialog->close();
+    });
+    confirmButton->setText("Confirm");
+    confirmButton->setGeometry(175,50, 50,25);
+    confirmButton->show();
+
+    QPushButton* cancelButton = new QPushButton(sellAllPriceDialog);
+    connect(cancelButton, &QPushButton::clicked, this, [=](){
+        sellAllPriceDialog->close();
+        sellAllDialog->close();
+    });
+    cancelButton->setText("Cancel");
+    cancelButton->setGeometry(175,50, 50,25);
+    cancelButton->show();
+
+    QHBoxLayout* dialogButtons = new QHBoxLayout(sellAllPriceDialog);
+    dialogButtons->addWidget(confirmButton);
+    dialogButtons->addWidget(cancelButton);
+    dialogButtons->setEnabled(true);
+
+    QVBoxLayout* sellAllPriceLayout = new QVBoxLayout(sellAllPriceDialog);
+    sellAllPriceLayout->addItem(priceFormat);
+    sellAllPriceLayout->addItem(dialogButtons);
+    sellAllPriceLayout->setEnabled(true);
+}
+
+
+void Widget::on_cargoCapSpinBox_valueChanged(int arg1)
+{
+    selectedShip->cargoCap = arg1;
 }
 
