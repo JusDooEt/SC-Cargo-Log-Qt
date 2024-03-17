@@ -75,6 +75,23 @@ void Widget::deleteCargoHold()
     }
 }
 
+void Widget::profitSent(const double sentProfit)
+{
+    profit = sentProfit;
+    currentBal = startingBal + profit;
+    startingBal = currentBal;
+    sellValue = totalValue + profit;
+    selectedShip->currentCap = 0;
+    totalValue = 0;
+    ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+    ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
+    ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+    ui->startBalDoubleSpinBox->setValue(startingBal);
+    ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
+    ui->sellAllButton->setDisabled(true);
+    ui->cargoHoldTextEdit->clear();
+}
+
 void Widget::updateTimer()
 {
     sec++;
@@ -136,6 +153,10 @@ void Widget::on_beginButton_clicked()
     hr = 0;
     min = 0;
     sec = 0;
+
+    //reset edit labels and reinitialize values
+    profit = 0;
+    ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
 
 
     // start the stop watch
@@ -242,5 +263,7 @@ void Widget::on_sellAllButton_clicked()
 {
     sellAllDialog = new SellAllDialog(this, startingBal, currentBal);
     sellAllDialog->show();
+
+    connect(sellAllDialog, &SellAllDialog::sendProfit, this, &Widget::profitSent);
 }
 

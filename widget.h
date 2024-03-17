@@ -52,9 +52,11 @@ private:
     int                 min;
     int                 sec;
     double              totalValue;
+    double              sellValue;
+    double              profit;
 
     void deleteCargoHold();
-
+    void profitSent(const double sentProfit);
 
 
 public slots:

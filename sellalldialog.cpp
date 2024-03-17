@@ -34,18 +34,17 @@ void SellAllDialog::on_cancelButton_clicked()
 
 void SellAllDialog::on_doubleSpinBox_valueChanged(double arg1)
 {
-    sellPrice = arg1;
-    currentBal += sellPrice;
-    profit = currentBal - startBal;
-    ui->editCurrentBalLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
-    ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+    sellPrice = ui->doubleSpinBox->value();
+    ui->editCurrentBalLabel->setText(QString("%1 aUEC").arg(currentBal + sellPrice, 0, 'f', 2));
+    ui->editProfitLabel->setText(QString("%1 aUEC").arg(currentBal + sellPrice - startBal, 0, 'f', 2));
     ui->sellAllButton->setDisabled(false);
 }
 
 
 void SellAllDialog::on_sellAllButton_clicked()
 {
-
-
+    profit = currentBal + sellPrice - startBal;
+    emit sendProfit(profit);
+    close();
 }
 
