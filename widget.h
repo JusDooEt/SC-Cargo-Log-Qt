@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTimer>
 #include "buyerrordialog.h"
+#include "sellalldialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,23 +38,25 @@ public:
 
 
 private:
-    Ui::Widget* ui;
-    BuyErrorDialog*    cargoBuyError;
-    QDialog*    sellAllDialog;
-    QTimer*     timer;
-    Ship*       selectedShip;
-    Cargo*      cargoHead;
-    double      startingBal;
-    double      currentBal;
-    bool        runStopWatch;
-    bool        sellAll;
-    int         hr;
-    int         min;
-    int         sec;
-    double         totalValue;
+    Ui::Widget*         ui;
+    BuyErrorDialog*     cargoBuyError;
+    SellAllDialog*      sellAllDialog;
+    QTimer*             timer;
+    Ship*               selectedShip;
+    Cargo*              cargoHead;
+    double              startingBal;
+    double              currentBal;
+    bool                runStopWatch;
+    bool                sellAll;
+    int                 hr;
+    int                 min;
+    int                 sec;
+    double              totalValue;
+    double              sellValue;
+    double              profit;
 
     void deleteCargoHold();
-
+    void profitSent(const double sentProfit);
 
 
 public slots:
@@ -65,9 +68,6 @@ private slots:
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
-    void onOkButtonClicked();
     void on_sellAllButton_clicked();
-    void onNoButtonClicked();
-    void onYesButtonClicked();
 };
 #endif // WIDGET_H

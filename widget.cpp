@@ -75,6 +75,23 @@ void Widget::deleteCargoHold()
     }
 }
 
+void Widget::profitSent(const double sentProfit)
+{
+    profit = sentProfit;
+    currentBal = startingBal + profit;
+    startingBal = currentBal;
+    sellValue = totalValue + profit;
+    selectedShip->currentCap = 0;
+    totalValue = 0;
+    ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+    ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
+    ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+    ui->startBalDoubleSpinBox->setValue(startingBal);
+    ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
+    ui->sellAllButton->setDisabled(true);
+    ui->cargoHoldTextEdit->clear();
+}
+
 void Widget::updateTimer()
 {
     sec++;
@@ -136,6 +153,10 @@ void Widget::on_beginButton_clicked()
     hr = 0;
     min = 0;
     sec = 0;
+
+    //reset edit labels and reinitialize values
+    profit = 0;
+    ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
 
 
     // start the stop watch
@@ -235,48 +256,14 @@ void Widget::on_buyButton_clicked()
 
 }
 
-void Widget::onOkButtonClicked()
-{
-    cargoBuyError->close();
-}
-
-
 
 
 
 void Widget::on_sellAllButton_clicked()
 {
-    sellAll = false;
-    sellAllDialog = new QDialog(this);
-    sellAllDialog->setWindowModality(Qt::WindowModality::ApplicationModal);
-    sellAllDialog->setMinimumSize(400,100);
-
-    QLabel* sellAllDialogLabel = new QLabel(sellAllDialog);
-    sellAllDialogLabel->setText("Do you want to sell all your cargo and end your run?");
-    sellAllDialogLabel->show();
-
-    QPushButton* yesButton = new QPushButton(sellAllDialog);
-    connect(yesButton, &QPushButton::clicked, this, &Widget::onYesButtonClicked);
-    yesButton->setText("Yes");
-    yesButton->setGeometry(175,50, 50,25);
-    yesButton->show();
-
-    QPushButton* noButton = new QPushButton(sellAllDialog);
-    connect(noButton, &QPushButton::clicked, this, &Widget::onNoButtonClicked);
-    noButton->setText("Yes");
-    noButton->setGeometry(175,50, 50,25);
-    noButton->show();
-
+    sellAllDialog = new SellAllDialog(this, startingBal, currentBal);
     sellAllDialog->show();
-}
 
-void Widget::onNoButtonClicked()
-{
-
-}
-
-void Widget::onYesButtonClicked()
-{
-
+    connect(sellAllDialog, &SellAllDialog::sendProfit, this, &Widget::profitSent);
 }
 
