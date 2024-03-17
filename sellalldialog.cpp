@@ -13,6 +13,7 @@ SellAllDialog::SellAllDialog(QWidget *parent, const double startBal, double curr
     , ui(new Ui::SellAllDialog)
 {
     ui->setupUi(this);
+    ui->sellAllButton->setDisabled(true);
     this->startBal = startBal;
     this->currentBal = currentBal;
     ui->editStartBalLabel->setText(QString("%1 aUEC").arg(startBal, 0, 'f', 2));
@@ -38,11 +39,13 @@ void SellAllDialog::on_doubleSpinBox_valueChanged(double arg1)
     profit = currentBal - startBal;
     ui->editCurrentBalLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+    ui->sellAllButton->setDisabled(false);
 }
 
 
 void SellAllDialog::on_sellAllButton_clicked()
 {
+
 
 }
 
