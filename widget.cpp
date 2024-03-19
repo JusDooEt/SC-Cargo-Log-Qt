@@ -245,8 +245,8 @@ void Widget::on_buyButton_clicked()
         ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
         ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
         ui->cargoHoldProgressBar->setValue(100-(((double)selectedShip->currentCap / selectedShip->cargoCap) * 100));
-        cargoDesc = (cargoHead->name +
-                    "\n\nAmount: " + QString::number(cargoHead->amount) +
+        cargoDesc = ("\n"+ cargoHead->name +
+                    "\nAmount: " + QString::number(cargoHead->amount) +
                     "\nPrice per UNIT: " + QString::number(cargoHead->pricePerUnit) + " aUEC"
                     "\nValue: " + QString("%1 aUEC").arg(cargoHead->value, 0, 'f', 2) +
                     "\n\n");
