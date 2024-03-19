@@ -35,6 +35,8 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
       - The cancel button will close the dialog box without making any changes.
       - Confirming to sell all will send the profit value back to the original window and displayed until a new run is started.
         - The user's current amount and starting amount will be updated accordingly.
+  - Cargo Hold Progress Bar
+    - Allows the user to easily and visually understand how much inventory space they have in their ship's cargo hold.
 
 ## To-Do
 - [x] Finish sell all button functionality
