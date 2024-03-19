@@ -7,6 +7,8 @@
 #include <QTimer>
 #include "buyerrordialog.h"
 #include "sellalldialog.h"
+#include <QListWidget>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -69,5 +71,6 @@ private slots:
     void on_endButton_clicked();
     void on_buyButton_clicked();
     void on_sellAllButton_clicked();
+
 };
 #endif // WIDGET_H
