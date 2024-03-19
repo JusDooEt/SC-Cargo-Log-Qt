@@ -7,6 +7,7 @@
 #include <QTimer>
 #include "buyerrordialog.h"
 #include "sellalldialog.h"
+#include "ship.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,11 +23,11 @@ struct Cargo{
     Cargo*  next;
 };
 
-struct Ship{
-    QString name;
-    int     cargoCap;
-    int     currentCap;
-};
+// struct Ship{
+//     QString name;
+//     int     cargoCap;
+//     int     currentCap;
+// };
 
 class Widget : public QWidget
 {
@@ -69,5 +70,6 @@ private slots:
     void on_endButton_clicked();
     void on_buyButton_clicked();
     void on_sellAllButton_clicked();
+    void on_sellButton_clicked();
 };
 #endif // WIDGET_H

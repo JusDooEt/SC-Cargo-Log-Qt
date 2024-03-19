@@ -25,6 +25,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         buyerrordialog.h buyerrordialog.cpp buyerrordialog.ui
         sellalldialog.h sellalldialog.cpp sellalldialog.ui
+        ship.h ship.cpp
+
 
 
     )

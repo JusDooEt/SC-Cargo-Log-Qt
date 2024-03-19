@@ -210,6 +210,7 @@ void Widget::on_buyButton_clicked()
 
         if(!valid)
         {
+            QApplication::beep();
             cargoBuyError = new BuyErrorDialog(this);
 
             cargoBuyError->setWindowModality(Qt::WindowModality::ApplicationModal);
@@ -269,5 +270,19 @@ void Widget::on_sellAllButton_clicked()
     sellAllDialog->show();
 
     connect(sellAllDialog, &SellAllDialog::sendProfit, this, &Widget::profitSent);
+}
+
+
+void Widget::on_sellButton_clicked()
+{
+    Cargo* ptr;
+    QString cargoDesc = "";
+    ptr = new Cargo;
+    ptr->name = ui->cargoNamelineEdit->text();
+    ptr->pricePerUnit = ui->priceDoubleSpinBox->value();
+    ptr->amount = ui->amountSpinBox->value();
+    ptr->value = ptr->amount * ptr->pricePerUnit;
+    bool valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
+             ptr->value  <= currentBal);
 }
 

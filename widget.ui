@@ -1104,10 +1104,11 @@
           <font>
            <pointsize>11</pointsize>
            <bold>true</bold>
+           <underline>true</underline>
           </font>
          </property>
          <property name="text">
-          <string>Cargo Hold    </string>
+          <string>Cargo Hold</string>
          </property>
         </widget>
        </item>
