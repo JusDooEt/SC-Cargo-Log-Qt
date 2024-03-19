@@ -497,6 +497,15 @@ QPushButton
 	border-radius: 10px;
 	background-color: rgba(255, 255, 255, 0);
 }
+
+QPushButton:Disabled
+{
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(181, 181, 181);
+	
+}
+
 QPushButton:hover
 {
 	border: 4px solid white;
@@ -543,12 +552,17 @@ QProgressBar
 	border-radius: 8px;
 	border-style: outset;
 	
+	background-color: rgba(3, 0, 38,150)
 }
 
 QProgressBar::chunk
 {
-	
-	background-color: rgb(85, 255, 255);
+	border: 2px solid rgb(255, 255, 255);
+	border-radius: px;
+	background-color: rgb(255, 255, 255);
+	width: 10px;
+	margin: 1px;
+
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -732,6 +746,9 @@ QProgressBar::chunk
                <pointsize>10</pointsize>
                <bold>true</bold>
               </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-radius: 8px</string>
              </property>
              <property name="text">
               <string>End Run</string>
@@ -1340,14 +1357,20 @@ QProgressBar::chunk
          <property name="value">
           <number>100</number>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
          <property name="textVisible">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="invertedAppearance">
           <bool>true</bool>
+         </property>
+         <property name="textDirection">
+          <enum>QProgressBar::TopToBottom</enum>
          </property>
         </widget>
        </item>
