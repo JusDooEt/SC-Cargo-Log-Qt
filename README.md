@@ -6,9 +6,9 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 
 
 ## Current build
-![build-imageV1](res/images/build-imageV1.PNG)
+[![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE)
 
-![giphy](https://github.com/JusDooEt/SC-Cargo-Log/assets/152052216/41f1e77c-f780-4e51-979f-ad950c02c79a)
+
 
 ## Current Functionality
 - User balance
