@@ -89,7 +89,10 @@ void Widget::profitSent(const double sentProfit)
     ui->startBalDoubleSpinBox->setValue(startingBal);
     ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
     ui->sellAllButton->setDisabled(true);
-    ui->cargoHoldTextEdit->clear();
+    ui->cargoHoldListWidget->clear();
+
+    //reset cargoHoldProgressBar
+    ui->cargoHoldProgressBar->setValue(100);
 }
 
 void Widget::updateTimer()
@@ -241,12 +244,13 @@ void Widget::on_buyButton_clicked()
         ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
         ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
         ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+        ui->cargoHoldProgressBar->setValue(100-(((double)selectedShip->currentCap / selectedShip->cargoCap) * 100));
         cargoDesc = (cargoHead->name +
                     "\nAmount: " + QString::number(cargoHead->amount) +
                     "\nPrice per UNIT: " + QString::number(cargoHead->pricePerUnit) + " aUEC"
                     "\nValue: " + QString("%1 aUEC").arg(cargoHead->value, 0, 'f', 2) +
                     "\n\n--------------------------------------------------\n\n");
-        ui->cargoHoldTextEdit->append(cargoDesc);
+        ui->cargoHoldListWidget->addItem(cargoDesc);
 
         // if(!ui->sellButton->isEnabled())
         //     ui->sellButton->setEnabled(true);
