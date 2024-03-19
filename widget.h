@@ -7,7 +7,7 @@
 #include <QTimer>
 #include "buyerrordialog.h"
 #include "sellalldialog.h"
-#include "ship.h"
+#include "shipList.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
