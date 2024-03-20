@@ -23,10 +23,10 @@ Widget::Widget(QWidget *parent)
 
 
     // Initialize Ship Object
-    selectedShip = new Ship;
-    selectedShip->name = ui->shipNamelineEdit->text();
-    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
-    selectedShip->currentCap = 0;
+//    selectedShip = new Ship;
+//    selectedShip->name = ui->shipNamelineEdit->text();
+//    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
+//    selectedShip->currentCap = 0;
 
     runStopWatch = false;
     sellAll      = false;
@@ -54,7 +54,7 @@ Widget::~Widget()
 {
     delete ui;
     delete timer;
-    delete selectedShip;
+//    delete selectedShip;
     deleteCargoHold();
 }
 
@@ -81,9 +81,9 @@ void Widget::profitSent(const double sentProfit)
     currentBal = startingBal + profit;
     startingBal = currentBal;
     sellValue = totalValue + profit;
-    selectedShip->currentCap = 0;
+//    selectedShip->currentCap = 0;
     totalValue = 0;
-    ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+    //ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
     ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
     ui->startBalDoubleSpinBox->setValue(startingBal);
@@ -122,7 +122,7 @@ void Widget::updateTimer()
 //      store the current text in selectedShip.name
 void Widget::on_shipNamelineEdit_returnPressed()
 {
-    selectedShip->name = ui->shipNamelineEdit->text();
+//    selectedShip->name = ui->shipNamelineEdit->text();
     //qDebug() << "selectedShip.name = " << selectedShip->name;
 }
 
@@ -165,10 +165,10 @@ void Widget::on_beginButton_clicked()
     // start the stop watch
     timer->start(1000);
 
-    selectedShip->name = ui->shipNamelineEdit->text();
-    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
-    selectedShip->currentCap = 0;
-    ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+//    selectedShip->name = ui->shipNamelineEdit->text();
+//    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
+//    selectedShip->currentCap = 0;
+    //ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
 }
 
 
@@ -205,8 +205,8 @@ void Widget::on_buyButton_clicked()
         ptr->amount = ui->amountSpinBox->value();
         ptr->value = ptr->amount * ptr->pricePerUnit;
 
-        valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
-                 ptr->value  <= currentBal);
+    //    valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
+    //             ptr->value  <= currentBal);
 
         if(!valid)
         {
@@ -240,12 +240,12 @@ void Widget::on_buyButton_clicked()
 
         currentBal -= cargoHead->value;
         totalValue += cargoHead->value;
-        selectedShip->currentCap += cargoHead->amount / 100;
+        //selectedShip->currentCap += cargoHead->amount / 100;
 
         ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
         ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
-        ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
-        ui->cargoHoldProgressBar->setValue(100-(((double)selectedShip->currentCap / selectedShip->cargoCap) * 100));
+        //ui->editCapcityNumLabel->setText(QString::number(selectedShip->currentCap) + " / " + QString::number(selectedShip->cargoCap) + " SCU");
+        //ui->cargoHoldProgressBar->setValue(100-(((double)selectedShip->currentCap / selectedShip->cargoCap) * 100));
         cargoDesc = (cargoHead->name +
                     "\nAmount: " + QString::number(cargoHead->amount) +
                     "\nPrice per UNIT: " + QString::number(cargoHead->pricePerUnit) + " aUEC"
@@ -282,7 +282,7 @@ void Widget::on_sellButton_clicked()
     ptr->pricePerUnit = ui->priceDoubleSpinBox->value();
     ptr->amount = ui->amountSpinBox->value();
     ptr->value = ptr->amount * ptr->pricePerUnit;
-    bool valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
-             ptr->value  <= currentBal);
+    //bool valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
+    //         ptr->value  <= currentBal);
 }
 

@@ -26,7 +26,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         buyerrordialog.h buyerrordialog.cpp buyerrordialog.ui
         sellalldialog.h sellalldialog.cpp sellalldialog.ui
         shipList.h shipList.cpp
-        shipListFile
+
+
+
 
 
 

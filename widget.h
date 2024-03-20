@@ -43,7 +43,7 @@ private:
     BuyErrorDialog*     cargoBuyError;
     SellAllDialog*      sellAllDialog;
     QTimer*             timer;
-    Ship*               selectedShip;
+    ShipList            shipList;
     Cargo*              cargoHead;
     double              startingBal;
     double              currentBal;
