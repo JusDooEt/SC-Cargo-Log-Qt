@@ -10,7 +10,7 @@ ShipList::ShipList(QObject *parent) : QObject{parent}
 
 ShipList::~ShipList()
 {
-
+    list.clear();
 }
 
 std::vector<Ship> ShipList::getList() const

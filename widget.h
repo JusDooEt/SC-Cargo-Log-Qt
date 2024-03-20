@@ -58,13 +58,12 @@ private:
 
     void deleteCargoHold();
     void profitSent(const double sentProfit);
-
+    void loadShipCombo();
 
 public slots:
     void updateTimer();
 
 private slots:
-    void on_shipNamelineEdit_returnPressed();
     void on_startBalDoubleSpinBox_valueChanged(double arg1);
     void on_beginButton_clicked();
     void on_endButton_clicked();

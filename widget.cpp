@@ -10,8 +10,6 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
 
     // Set up load up state
-    ui->shipNamelineEdit->setText("Crusader, C2 Hercules Starlifter");
-    ui->cargoCapSpinBox->setValue(696);
     ui->cargoNamelineEdit->setDisabled(true);
     ui->priceDoubleSpinBox->setDisabled(true);
     ui->amountSpinBox->setDisabled(true);
@@ -21,7 +19,13 @@ Widget::Widget(QWidget *parent)
     ui->endButton->setDisabled(true);
     // ui->currentBalanceLabel->setTextFormat(Qt::FixedNotation)
 
+    // Initialize Ship Combo Box
+    loadShipCombo();
+    ui->shipComboBox->setCurrentIndex(2);
 
+
+    // Initialize editShipNameLabel
+    ui->editShipNameLabel->setText(ui->shipComboBox->currentText());
     // Initialize Ship Object
 //    selectedShip = new Ship;
 //    selectedShip->name = ui->shipNamelineEdit->text();
@@ -95,6 +99,21 @@ void Widget::profitSent(const double sentProfit)
     ui->cargoHoldProgressBar->setValue(100);
 }
 
+void Widget::loadShipCombo()
+{
+    shipList.getList();
+    std::vector<Ship> list;
+    int count;
+
+    list = shipList.getList();
+    count = shipList.getShipCount();
+    ui->shipComboBox->setMaxCount(count);
+    for(int i = 0; i < count; i++)
+    {
+        ui->shipComboBox->addItem(list[i].make + ", " + list[i].model);
+    }
+}
+
 void Widget::updateTimer()
 {
     sec++;
@@ -118,13 +137,6 @@ void Widget::updateTimer()
 }
 
 
-// When return is pressed in shipNameLineEdit:
-//      store the current text in selectedShip.name
-void Widget::on_shipNamelineEdit_returnPressed()
-{
-//    selectedShip->name = ui->shipNamelineEdit->text();
-    //qDebug() << "selectedShip.name = " << selectedShip->name;
-}
 
 // If startBalDoubleSpinBox value is changed:
 //      store current value in startingBal
@@ -145,8 +157,6 @@ void Widget::on_beginButton_clicked()
 
     ui->startBalDoubleSpinBox->setDisabled(true);
     ui->beginButton->setDisabled(true);
-    ui->shipNamelineEdit->setDisabled(true);
-    ui->cargoCapSpinBox->setDisabled(true);
     ui->cargoNamelineEdit->setDisabled(false);
     ui->priceDoubleSpinBox->setDisabled(false);
     ui->amountSpinBox->setDisabled(false);
@@ -177,8 +187,6 @@ void Widget::on_endButton_clicked()
     ui->beginButton->setDisabled(false);
     ui->startBalDoubleSpinBox->setDisabled(false);
     ui->beginButton->setDisabled(false);
-    ui->shipNamelineEdit->setDisabled(false);
-    ui->cargoCapSpinBox->setDisabled(false);
 
     ui->cargoNamelineEdit->setDisabled(true);
     ui->priceDoubleSpinBox->setDisabled(true);

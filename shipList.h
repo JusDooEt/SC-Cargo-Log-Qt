@@ -40,6 +40,7 @@ class ShipList : public QObject
     Q_OBJECT
 public:
     explicit ShipList(QObject *parent = nullptr);
+    ~ShipList();
     std::vector<Ship> getList() const;
     int getShipCount() const;
 
