@@ -1,14 +1,26 @@
 #include "shipList.h"
 #include <QDebug>
-#include <fstream>
-#include <iostream>
-#include <string>
 
 ShipList::ShipList(QObject *parent) : QObject{parent}
 {
     count = 0;
     inFile = "shipsFile.txt";
     CreateList();
+}
+
+ShipList::~ShipList()
+{
+
+}
+
+std::vector<Ship> ShipList::getList() const
+{
+    return list;
+}
+
+int ShipList::getShipCount() const
+{
+    return count;
 }
 
 void ShipList::CreateList()
@@ -18,45 +30,7 @@ void ShipList::CreateList()
     int         shipInv;
     ShipType    type;
 
-    // std::ifstream   fin;
-    // std::string     typeStr;
-
-    // fin.open("shipsFile.txt");
-    // while(fin)
-    // {
-    //     qDebug() << "reading file...";
-    //     getline(fin,makeStr);
-    //     getline(fin, modelStr);
-    //     fin >> shipInv;
-    //     fin.ignore();
-    //     getline(fin, typeStr);
-    //     fin.ignore();
-    //     list.push_back(Ship(QString::fromStdString(makeStr), QString::fromStdString(modelStr), shipInv, setShipType(QString::fromStdString(typeStr))));
-    //     count++;
-
-    //     // Debug output in console
-    //     qDebug() << "list[" << count - 1 << "]";
-    //     qDebug() << "Make: " << list[count - 1].make;
-    //     qDebug() << "Model: " << list[count - 1].model;
-    //     qDebug() << "Cargo Cap: " << list[count - 1].cargoCap;
-    //     switch (list[count-1].type) {
-    //     case SMALL:
-    //         qDebug() << "Type: SMALL";
-    //         break;
-    //     case MEDIUM:
-    //         qDebug() << "Type: MEDIUM";
-    //         break;
-    //     case LARGE:
-    //         qDebug() << "Type: Large";
-    //         break;
-    //     default:
-    //         qDebug() << "Type: ERROR";
-    //         break;
-    //     }
-    //     qDebug() << "-------------------------";
-    // }
-
-    QFile File("shipsFile.txt");
+    QFile File(inFile);
     if(!File.exists())
     {
         qDebug() << "File doesnt exist";
@@ -75,16 +49,14 @@ void ShipList::CreateList()
         model = stream.readLine();
         shipInv = stream.readLine().toInt();
         QString typeStr = stream.readLine();
-        //in.readLine();
         list.push_back(Ship(make, model, shipInv, setShipType(typeStr)));
         count++;
 
         // Debug output in console
-        qDebug() << make; // "list[" << count - 1 << "]";
-        qDebug() << model; //"Make: " << list[count - 1].make;
-        qDebug() << shipInv; //"Model: " << list[count - 1].model;
-        qDebug() << typeStr;
-        //qDebug() << "Cargo Cap: " << list[count - 1].cargoCap;
+        qDebug() << "list[" << count - 1 << "]";
+        qDebug() << "Make: " << list[count - 1].make;
+        qDebug() << "Model: " << list[count - 1].model;
+        qDebug() << "Cargo Cap: " << list[count - 1].cargoCap;
         switch (list[count-1].type) {
         case SMALL:
             qDebug() << "Type: SMALL";
