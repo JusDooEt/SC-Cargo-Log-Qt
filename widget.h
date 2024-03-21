@@ -49,6 +49,7 @@ private:
     double              currentBal;
     bool                runStopWatch;
     bool                sellAll;
+    int                 shipIndex;
     int                 hr;
     int                 min;
     int                 sec;
@@ -58,18 +59,22 @@ private:
 
     void deleteCargoHold();
     void profitSent(const double sentProfit);
+    void loadShipCombo();
 
+signals:
+    void shipUpdated(int index);
 
 public slots:
     void updateTimer();
 
 private slots:
-    void on_shipNamelineEdit_returnPressed();
     void on_startBalDoubleSpinBox_valueChanged(double arg1);
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
     void on_sellAllButton_clicked();
     void on_sellButton_clicked();
+    void on_shipComboBox_currentIndexChanged(int index);
+    void shipChanged(int index);
 };
 #endif // WIDGET_H

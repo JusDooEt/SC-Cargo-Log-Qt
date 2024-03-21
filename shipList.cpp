@@ -10,8 +10,44 @@ ShipList::ShipList(QObject *parent) : QObject{parent}
 
 ShipList::~ShipList()
 {
-
+    list.clear();
 }
+
+void ShipList::setMake(int index, QString make)
+{
+    if(index >= count)
+        return;
+    list[index].make = make;
+}
+
+void ShipList::setModel(int index, QString model)
+{
+    if(index >= count)
+        return;
+    list[index].model = model;
+}
+
+void ShipList::setCargoCap(int index, int cargoCap)
+{
+    if(index >= count)
+        return;
+    list[index].cargoCap = cargoCap;
+}
+
+void ShipList::setCurrentCap(int index, int currentCap)
+{
+    if(index >= count)
+        return;
+    list[index].currentCap = currentCap;
+}
+
+void ShipList::setType(int index, ShipType type)
+{
+    if(index >= count)
+        return;
+    list[index].type = type;
+}
+
 
 std::vector<Ship> ShipList::getList() const
 {
@@ -21,6 +57,61 @@ std::vector<Ship> ShipList::getList() const
 int ShipList::getShipCount() const
 {
     return count;
+}
+
+QString ShipList::getName(int index) const
+{
+    if(index >= count)
+        return NULL;
+    return list[index].make + ", " + list[index].model;
+}
+
+QString ShipList::getMake(int index) const
+{
+    if(index >= count)
+        return NULL;
+
+    return list[index].make;
+}
+
+QString ShipList::getModel(int index) const
+{
+    if(index >= count)
+        return NULL;
+
+    return list[index].model;
+}
+
+int ShipList::getCargoCap(int index) const
+{
+    if(index >= count)
+        return -1;
+
+    return list[index].cargoCap;
+}
+
+int ShipList::getCurrentCap(int index) const
+{
+    if(index >= count)
+        return -1;
+
+    return list[index].currentCap;
+}
+
+ShipType ShipList::getType(int index) const
+{
+    if(index >= count)
+        return ERROR;
+
+    return list[index].type;
+}
+
+Ship ShipList::getShip(int index) const
+{
+    if(index >= count)
+        return Ship("", "", 0, ERROR);
+
+    return list[index];
 }
 
 void ShipList::CreateList()
