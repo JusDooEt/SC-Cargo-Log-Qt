@@ -5,6 +5,9 @@
 #include <QWidget>
 #include <QDebug>
 #include <QTimer>
+#include "buyerrordialog.h"
+#include "sellalldialog.h"
+#include "shipList.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,11 +23,11 @@ struct Cargo{
     Cargo*  next;
 };
 
-struct Ship{
-    QString name;
-    int     cargoCap;
-    int     currentCap;
-};
+// struct Ship{
+//     QString name;
+//     int     cargoCap;
+//     int     currentCap;
+// };
 
 class Widget : public QWidget
 {
@@ -36,39 +39,44 @@ public:
 
 
 private:
-    Ui::Widget* ui;
-    QDialog*    cargoBuyError;
-    QDialog*    sellAllDialog;
-    QDialog*    sellAllPriceDialog;
-    QTimer*     timer;
-    Ship*       selectedShip;
-    Cargo*      cargoHead;
-    double      startingBal;
-    double      currentBal;
-    bool        runStopWatch;
-    bool        sellAll;
-    int         hr;
-    int         min;
-    int         sec;
-    double      totalValue;
-    double      sellAllPrice;
-    double      profit;
+
+    Ui::Widget*         ui;
+    BuyErrorDialog*     cargoBuyError;
+    SellAllDialog*      sellAllDialog;
+    QTimer*             timer;
+    ShipList            shipList;
+    Cargo*              cargoHead;
+    double              startingBal;
+    double              currentBal;
+    bool                runStopWatch;
+    bool                sellAll;
+    int                 shipIndex;
+    int                 hr;
+    int                 min;
+    int                 sec;
+    double              totalValue;
+    double              sellValue;
+    double              profit;
+
 
     void deleteCargoHold();
+    void profitSent(const double sentProfit);
+    void loadShipCombo();
 
+signals:
+    void shipUpdated(int index);
 
 public slots:
     void updateTimer();
 
 private slots:
-    void on_shipNamelineEdit_returnPressed();
     void on_startBalDoubleSpinBox_valueChanged(double arg1);
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
-    void on_okButton_clicked();
     void on_sellAllButton_clicked();
-    void on_yesDialogButton_clicked();
-    void on_cargoCapSpinBox_valueChanged(int arg1);
+    void on_sellButton_clicked();
+    void on_shipComboBox_currentIndexChanged(int index);
+    void shipChanged(int index);
 };
 #endif // WIDGET_H

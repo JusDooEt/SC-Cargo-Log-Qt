@@ -23,6 +23,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(SC-Cargo-Log
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        buyerrordialog.h buyerrordialog.cpp buyerrordialog.ui
+        sellalldialog.h sellalldialog.cpp sellalldialog.ui
+        shipList.h shipList.cpp
+
+
+
+
 
 
     )
