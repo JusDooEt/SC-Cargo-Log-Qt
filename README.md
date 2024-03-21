@@ -6,9 +6,9 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 
 
 ## Current build
-![build-imageV1](res/images/build-imageV1.PNG)
+[![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE)
+![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
 
-![giphy](https://github.com/JusDooEt/SC-Cargo-Log/assets/152052216/41f1e77c-f780-4e51-979f-ad950c02c79a)
 
 ## Current Functionality
 - User balance
@@ -28,11 +28,20 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
     - Will verify if the value and amount is viable based on the cargo capacity and starting balance input before the route was started
       - If the purchase is not valid a dialog box will appear to warn the user and a cargo object will NOT be created and added to the stack;
     - Will update the current balance, current cargo amount and cargo hold value labels to correct values after buying cargo
+  - Sell All Button
+    - This button will open a dialog window to confirm that the user wants to sell all of their cargo in storage.
+      - The dialog box will ask for a total sell price and give live information about the user's current balance and profit.
+      - The confirm to sell all button will be disabled until the user enters a value into the sell price text edit box.
+      - The cancel button will close the dialog box without making any changes.
+      - Confirming to sell all will send the profit value back to the original window and displayed until a new run is started.
+        - The user's current amount and starting amount will be updated accordingly.
+  - Cargo Hold Progress Bar
+    - Allows the user to easily and visually understand how much inventory space they have in their ship's cargo hold.
 
 ## To-Do
-- [ ] Finish sell all button functionality
+- [x] Finish sell all button functionality
 - [ ] Finish sell button functionality
-- [ ] Create profit label functionality
+- [x] Create profit label functionality
 - [ ] Create finished run stats page
 
 
