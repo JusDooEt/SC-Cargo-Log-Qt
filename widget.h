@@ -39,6 +39,7 @@ public:
 
 
 private:
+
     Ui::Widget*         ui;
     BuyErrorDialog*     cargoBuyError;
     SellAllDialog*      sellAllDialog;
@@ -56,6 +57,7 @@ private:
     double              totalValue;
     double              sellValue;
     double              profit;
+
 
     void deleteCargoHold();
     void profitSent(const double sentProfit);
