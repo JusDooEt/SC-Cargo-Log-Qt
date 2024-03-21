@@ -502,7 +502,7 @@ QPushButton
 {
 	border-width: 2px;
 	border-style: solid;
-	border-radius: 10px;
+	border-radius: 6px;
 	background-color: rgba(255, 255, 255, 0);
 }
 
@@ -510,7 +510,7 @@ QPushButton:Disabled
 {
 	border-width: 1px;
 	border-style: solid;
-	border-radius: 10px;
+	border-radius: 6px;
 	border-color: rgb(181, 181, 181);
 	
 }
@@ -914,6 +914,11 @@ QListWidget::item
      </item>
      <item>
       <widget class="Line" name="line">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+border: 1px solid white;
+border-radius: 2px;</string>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1193,6 +1198,11 @@ QListWidget::item
    </item>
    <item>
     <widget class="Line" name="line_2">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+border: 1px solid white;
+border-radius: 2px</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>

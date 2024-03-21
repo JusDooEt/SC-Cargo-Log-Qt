@@ -39,10 +39,27 @@ class ShipList : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor + Desctructor
     explicit ShipList(QObject *parent = nullptr);
     ~ShipList();
+
+    //Mutators
+    void setMake(int index, QString make);
+    void setModel(int index, QString model);
+    void setCargoCap(int index, int cargoCap);
+    void setCurrentCap(int index, int currentCap);
+    void setType(int index, ShipType type);
+
+    //Accessors
     std::vector<Ship> getList() const;
     int getShipCount() const;
+    QString getName(int index) const;
+    QString getMake(int index) const;
+    QString getModel(int index) const;
+    int getCargoCap(int index)const;
+    int getCurrentCap(int index) const;
+    ShipType getType(int index) const;
+    Ship getShip(int index) const;
 
 private:
     std::vector<Ship> list;
