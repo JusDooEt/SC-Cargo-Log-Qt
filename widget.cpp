@@ -40,8 +40,12 @@ Widget::Widget(QWidget *parent)
 
     runStopWatch = false;
     sellAll      = false;
+    sellButtonEnabled = false;
     totalValue = 0;
-    cargoHead = nullptr;
+    cargoSellPtr = nullptr;
+    cargoBuyError = nullptr;
+    sellAllDialog = nullptr;
+    sellDialog = nullptr;
 
     hr = 00;
     min = 00;
@@ -57,7 +61,9 @@ Widget::Widget(QWidget *parent)
     ui->startBalDoubleSpinBox->setValue(startingBal);
     ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
 
-    connect(this, &Widget::shipUpdated, this, &Widget::shipChanged);
+    connect(this, &Widget::shipStorageChanged, this, &Widget::updateShipStorage);
+    connect(this, &Widget::shipChanged, this, &Widget::updateShip);
+    //connect(ui->cargoHoldListWidget, &QListWidget::itemDoubleClicked, this)
 }
 
 //Deconstructor
@@ -65,26 +71,11 @@ Widget::~Widget()
 {
     delete ui;
     delete timer;
+    delete cargoSellPtr;
 //    delete selectedShip;
-    deleteCargoHold();
+
 }
 
-void Widget::deleteCargoHold()
-{
-    if(cargoHead == nullptr)
-    {
-        return;
-    }
-
-    Cargo* tempPtr;
-    while (cargoHead != nullptr)
-    {
-        tempPtr = cargoHead;
-        cargoHead = tempPtr->next;
-        delete tempPtr;
-        tempPtr = nullptr;
-    }
-}
 
 void Widget::profitSent(const double sentProfit)
 {
@@ -106,7 +97,7 @@ void Widget::profitSent(const double sentProfit)
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
     //reset cargoHoldProgressBar
     ui->cargoHoldProgressBar->setValue(100);
-    deleteCargoHold();
+    cargoHold.clear();
 }
 
 void Widget::loadShipCombo()
@@ -214,16 +205,15 @@ void Widget::on_buyButton_clicked()
     {
         bool valid = false;
 
-        Cargo* ptr;
-        QString cargoDesc = "";
-        ptr = new Cargo;
-        ptr->name = ui->cargoNamelineEdit->text();
-        ptr->pricePerUnit = ui->priceDoubleSpinBox->value();
-        ptr->amount = ui->amountSpinBox->value();
-        ptr->value = ptr->amount * ptr->pricePerUnit;
 
-       valid = (ceil(ptr->amount/100) <= (shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) &&
-                ptr->value  <= currentBal);
+        QString cargoDesc = "";
+        QString name = ui->cargoNamelineEdit->text();
+        double pricePerUnit = ui->priceDoubleSpinBox->value();
+        int amount = ui->amountSpinBox->value();
+        double value = amount * pricePerUnit;
+
+       valid = (ceil(amount/100) <= (shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) &&
+                 value  <= currentBal && ui->priceDoubleSpinBox->value() > 0 && ui->amountSpinBox->value() > 0);
 
         if(!valid)
         {
@@ -236,21 +226,21 @@ void Widget::on_buyButton_clicked()
             return;
         }
 
-        ptr->next = cargoHead;
-        cargoHead = ptr;
+        cargoHold.push_back(Cargo(name, pricePerUnit, value, amount));
 
-        currentBal -= cargoHead->value;
-        totalValue += cargoHead->value;
-        shipList.setCurrentCap(shipIndex, shipList.getCurrentCap(shipIndex) + (cargoHead->amount / 100));
+        currentBal -= value;
+        totalValue += value;
+        shipList.setCurrentCap(shipIndex, shipList.getCurrentCap(shipIndex) + (amount / 100));
 
         ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
         ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
-        ui->editCapcityNumLabel->setText(QString::number(shipList.getCurrentCap(shipIndex)) + " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
-        ui->cargoHoldProgressBar->setValue(100-(((double)shipList.getCurrentCap(shipIndex) / shipList.getCargoCap(shipIndex)) * 100));
-        cargoDesc = (cargoHead->name +
-                    "\nAmount: " + QString::number(cargoHead->amount) +
-                    "\nPrice per UNIT: " + QString::number(cargoHead->pricePerUnit) + " aUEC"
-                    "\nValue: " + QString("%1 aUEC").arg(cargoHead->value, 0, 'f', 2) +
+        // ui->editCapcityNumLabel->setText(QString::number(shipList.getCurrentCap(shipIndex)) + " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
+        // ui->cargoHoldProgressBar->setValue(100-(((double)shipList.getCurrentCap(shipIndex) / shipList.getCargoCap(shipIndex)) * 100));
+        emit shipStorageChanged();
+        cargoDesc = (name +
+                    "\nAmount: " + QString::number(amount) +
+                    "\nPrice per UNIT: " + QString::number(pricePerUnit) + " aUEC"
+                    "\nValue: " + QString("%1 aUEC").arg(value, 0, 'f', 2) +
                     "\n");
         ui->cargoHoldListWidget->addItem(cargoDesc);
         ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
@@ -274,31 +264,121 @@ void Widget::on_sellAllButton_clicked()
 }
 
 
-void Widget::on_sellButton_clicked()
-{
-    Cargo* ptr;
-    QString cargoDesc = "";
-    ptr = new Cargo;
-    ptr->name = ui->cargoNamelineEdit->text();
-    ptr->pricePerUnit = ui->priceDoubleSpinBox->value();
-    ptr->amount = ui->amountSpinBox->value();
-    ptr->value = ptr->amount * ptr->pricePerUnit;
-    //bool valid = (ceil(ptr->amount/100) <= (selectedShip->cargoCap - selectedShip->currentCap) &&
-    //         ptr->value  <= currentBal);
-}
 
 
 void Widget::on_shipComboBox_currentIndexChanged(int index)
 {
     shipIndex = index;
-    emit shipUpdated(index);
+    emit shipChanged(index);
 }
 
-void Widget::shipChanged(int index)
+void Widget::updateShip(int index)
 {
     ui->editShipNameLabel->setText(shipList.getName(index));
-    ui->editCapcityNumLabel->setText(QString::number(shipList.getCurrentCap(index)) +
-                                     " / " + QString::number(shipList.getCargoCap(index)) + " SCU");
+    // ui->editCapcityNumLabel->setText(QString::number(shipList.getCurrentCap(shipIndex)) +
+    //                                  " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
+    // ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
+    emit shipStorageChanged();
+}
+
+
+
+
+// void Widget::on_cargoHoldListWidget_currentRowChanged(int currentRow)
+// {
+//     qDebug() << "currentRow: " << currentRow;
+//     qDebug() << "Cargo[" << currentRow << "] name: " << cargoHold[currentRow].name;
+//     ui->cargoNamelineEdit->setText(cargoHold[currentRow].name);
+//     ui->priceDoubleSpinBox->setValue(cargoHold[currentRow].pricePerUnit);
+//     ui->amountSpinBox->setValue(cargoHold[currentRow].amount);
+//     ui->amountSpinBox->setMaximum(cargoHold[currentRow].amount);
+//     ui->sellButton->setEnabled(true);
+// }
+
+
+
+
+void Widget::on_cargoNamelineEdit_textEdited(const QString &arg1)
+{
+    if(ui->sellButton->isEnabled())
+    {
+        ui->sellButton->setDisabled(true);
+        ui->amountSpinBox->setMaximum(shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex));
+        ui->amountSpinBox->setValue(shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex));
+        ui->cargoHoldListWidget->clearSelection();
+    }
+
+}
+
+
+void Widget::on_cargoHoldListWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    cargoIndex = ui->cargoHoldListWidget->currentRow();
+    qDebug() << "Name: " << cargoHold[cargoIndex].name;
+    qDebug() << "Amount: " <<cargoHold[cargoIndex].amount;
+    qDebug() << "Price per Unit: " << cargoHold[cargoIndex].pricePerUnit;
+    qDebug() << "Value: " << cargoHold[cargoIndex].value;
+    ui->amountSpinBox->setMaximum(cargoHold[cargoIndex].amount);
+    ui->cargoNamelineEdit->setText(cargoHold[cargoIndex].name);
+    ui->priceDoubleSpinBox->setValue(cargoHold[cargoIndex].pricePerUnit);
+    ui->amountSpinBox->setValue(cargoHold[cargoIndex].amount);
+    ui->sellButton->setEnabled(true);
+}
+
+
+void Widget::on_sellButton_clicked()
+{
+
+    QString cargoSellName;
+    double  cargoSellPrice;
+    double  cargoSellValue;
+    int     cargoSellAmount;
+
+    cargoSellName = ui->cargoNamelineEdit->text();
+    cargoSellPrice = ui->priceDoubleSpinBox->value();
+    cargoSellAmount = ui->amountSpinBox->value();
+    cargoSellValue = cargoSellPrice * cargoSellAmount;
+    cargoSellPtr = new Cargo(cargoSellName, cargoSellPrice, cargoSellValue, cargoSellAmount);
+    qDebug() << "New sellCargo obj created";
+
+    sellDialog = new SellDialog(this, cargoHold[cargoIndex], *cargoSellPtr);
+    sellDialog->show();
+    connect(sellDialog, &SellDialog::sell, this, &Widget::cargoSellAccepted);
+}
+
+void Widget::cargoSellAccepted()
+{
+    if(ui->amountSpinBox->value() == cargoHold[cargoIndex].amount)
+    {
+        profit += cargoSellPtr->value - cargoHold[cargoIndex].value;
+        cargoHold.erase(cargoHold.begin() + cargoIndex);
+    }
+    else
+    {
+        profit += cargoSellPtr->value - (cargoHold[cargoIndex].pricePerUnit * cargoSellPtr->amount);
+        cargoHold[cargoIndex].amount -= cargoSellPtr->amount;
+        cargoHold[cargoIndex].value = cargoHold[cargoIndex].amount * cargoHold[cargoIndex].pricePerUnit;
+    }
+    ui->cargoHoldListWidget->clear();
+
+    for(int i = 0; i < cargoHold.size(); i++)
+    {
+        ui->cargoHoldListWidget->addItem(cargoHold[i].name +
+                                         "\nAmount: " + QString::number(cargoHold[i].amount) +
+                                         "\nPrice per UNIT: " + QString::number(cargoHold[i].pricePerUnit) + " aUEC"
+                                                                                                             "\nValue: " + QString("%1 aUEC").arg(cargoHold[i].value, 0, 'f', 2) +
+                                         "\n");
+    }
+
+    shipList.setCurrentCap(shipIndex, shipList.getCurrentCap(shipIndex) - ceil(cargoSellPtr->amount / 100));
+    emit shipStorageChanged();
+}
+
+void Widget::updateShipStorage()
+{
+    ui->editCapcityNumLabel->setText(QString::number(shipList.getCurrentCap(shipIndex)) +
+                                     " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
+    ui->cargoHoldProgressBar->setValue(100-(((double)shipList.getCurrentCap(shipIndex) / shipList.getCargoCap(shipIndex)) * 100));
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
 }
 
