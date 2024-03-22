@@ -350,6 +350,12 @@ void Widget::on_sellButton_clicked()
     cargoSellPrice = ui->priceDoubleSpinBox->value();
     cargoSellAmount = ui->amountSpinBox->value();
     cargoSellValue = cargoSellPrice * cargoSellAmount;
+    if(cargoSellPtr != nullptr)
+    {
+        delete cargoSellPtr;
+        cargoSellPtr = nullptr;
+        qDebug() << "Sell obj deleted";
+    }
     cargoSellPtr = new Cargo(cargoSellName, cargoSellPrice, cargoSellValue, cargoSellAmount);
     qDebug() << "New sellCargo obj created";
 
