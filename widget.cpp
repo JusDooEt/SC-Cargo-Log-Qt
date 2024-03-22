@@ -79,9 +79,8 @@ Widget::~Widget()
 
 void Widget::profitSent(const double sentProfit)
 {
-    profit = sentProfit;
+    profit += sentProfit;
     currentBal = startingBal + profit;
-    startingBal = currentBal;
     sellValue = totalValue + profit;
 //    selectedShip->currentCap = 0;
     shipList.setCurrentCap(shipIndex, 0);
@@ -90,7 +89,6 @@ void Widget::profitSent(const double sentProfit)
                                      " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
     ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
-    ui->startBalDoubleSpinBox->setValue(startingBal);
     ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
     ui->sellAllButton->setDisabled(true);
     ui->cargoHoldListWidget->clear();
@@ -179,6 +177,16 @@ void Widget::on_beginButton_clicked()
 
     // start the stop watch
     timer->start(1000);
+
+    // File.setFileName("CargoLog.txt");
+    // if (!File.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
+    // {
+    //     qDebug() << "open error" << File.OpenError;
+    //     return;
+    // }
+
+    // stream.setDevice(&File);
+    // stream << "Ship Name: " << shipList.getName(shipIndex);
 }
 
 
@@ -196,6 +204,9 @@ void Widget::on_endButton_clicked()
 
     // stop the stop watch
     timer->stop();
+    startingBal = currentBal;
+    ui->startBalDoubleSpinBox->setValue(startingBal);
+    //File.close();
 }
 
 
@@ -334,6 +345,7 @@ void Widget::on_sellButton_clicked()
     double  cargoSellValue;
     int     cargoSellAmount;
 
+
     cargoSellName = ui->cargoNamelineEdit->text();
     cargoSellPrice = ui->priceDoubleSpinBox->value();
     cargoSellAmount = ui->amountSpinBox->value();
@@ -372,6 +384,15 @@ void Widget::cargoSellAccepted()
 
     shipList.setCurrentCap(shipIndex, shipList.getCurrentCap(shipIndex) - ceil(cargoSellPtr->amount / 100));
     emit shipStorageChanged();
+
+    //Edit Profit label
+    ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+
+    //reset cargo input compenents
+    ui->cargoNamelineEdit->clear();
+    ui->amountSpinBox->setValue(0);
+    ui->priceDoubleSpinBox->setValue(0);
+    ui->sellButton->setDisabled(true);
 }
 
 void Widget::updateShipStorage()

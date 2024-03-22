@@ -36,6 +36,8 @@ private:
     ShipList            shipList;
     std::vector<Cargo>  cargoHold;
     Cargo*              cargoSellPtr;
+    //QFile               File;
+    //QTextStream         stream;
     double              startingBal;
     double              currentBal;
     bool                runStopWatch;
@@ -50,7 +52,7 @@ private:
     double              sellValue;
     double              profit;
 
-    void profitSent(const double sentProfit);
+
     void loadShipCombo();
 
 signals:
@@ -74,5 +76,6 @@ private slots:
     void on_sellButton_clicked();
     void cargoSellAccepted();
     void updateShipStorage();
+    void profitSent(const double sentProfit);
 };
 #endif // WIDGET_H
