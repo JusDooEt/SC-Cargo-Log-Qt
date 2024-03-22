@@ -245,6 +245,7 @@ void Widget::on_buyButton_clicked()
 
         ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
         ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
+
         // ui->editCapcityNumLabel->setText(QString::number(shipList.getCurrentCap(shipIndex)) + " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
         // ui->cargoHoldProgressBar->setValue(100-(((double)shipList.getCurrentCap(shipIndex) / shipList.getCargoCap(shipIndex)) * 100));
         emit shipStorageChanged();
@@ -253,6 +254,7 @@ void Widget::on_buyButton_clicked()
                     "\nPrice per UNIT: " + QString::number(pricePerUnit) + " aUEC"
                     "\nValue: " + QString("%1 aUEC").arg(value, 0, 'f', 2) +
                     "\n");
+
         ui->cargoHoldListWidget->addItem(cargoDesc);
         ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
         // if(!ui->sellButton->isEnabled())

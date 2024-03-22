@@ -573,6 +573,7 @@ QProgressBar::chunk
 	width: 10px;
 	margin: 1px;
 
+
 }
 
 QListWidget::item

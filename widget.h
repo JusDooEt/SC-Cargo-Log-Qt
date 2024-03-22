@@ -77,5 +77,6 @@ private slots:
     void cargoSellAccepted();
     void updateShipStorage();
     void profitSent(const double sentProfit);
+
 };
 #endif // WIDGET_H
