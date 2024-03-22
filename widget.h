@@ -5,30 +5,17 @@
 #include <QWidget>
 #include <QDebug>
 #include <QTimer>
+#include <QListWidget>
 #include "buyerrordialog.h"
 #include "sellalldialog.h"
-#include <QListWidget>
-#include <QListWidgetItem>
+#include "shipList.h"
+#include "selldialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class Widget;
 }
 QT_END_NAMESPACE
-
-struct Cargo{
-    QString name;
-    double  pricePerUnit;
-    double  value;
-    int     amount;
-    Cargo*  next;
-};
-
-struct Ship{
-    QString name;
-    int     cargoCap;
-    int     currentCap;
-};
 
 class Widget : public QWidget
 {
@@ -40,16 +27,24 @@ public:
 
 
 private:
+
     Ui::Widget*         ui;
     BuyErrorDialog*     cargoBuyError;
     SellAllDialog*      sellAllDialog;
+    SellDialog*         sellDialog;
     QTimer*             timer;
-    Ship*               selectedShip;
-    Cargo*              cargoHead;
+    ShipList            shipList;
+    std::vector<Cargo>  cargoHold;
+    Cargo*              cargoSellPtr;
+    //QFile               File;
+    //QTextStream         stream;
     double              startingBal;
     double              currentBal;
     bool                runStopWatch;
     bool                sellAll;
+    bool                sellButtonEnabled;
+    int                 shipIndex;
+    int                 cargoIndex;
     int                 hr;
     int                 min;
     int                 sec;
@@ -57,20 +52,31 @@ private:
     double              sellValue;
     double              profit;
 
-    void deleteCargoHold();
-    void profitSent(const double sentProfit);
 
+    void loadShipCombo();
+
+signals:
+    void shipChanged(int index);
+    void shipStorageChanged();
 
 public slots:
     void updateTimer();
 
 private slots:
-    void on_shipNamelineEdit_returnPressed();
     void on_startBalDoubleSpinBox_valueChanged(double arg1);
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
     void on_sellAllButton_clicked();
+    void on_shipComboBox_currentIndexChanged(int index);
+    void updateShip(int index);
+    //void on_cargoHoldListWidget_currentRowChanged(int currentRow);
+    void on_cargoNamelineEdit_textEdited(const QString &arg1);
+    void on_cargoHoldListWidget_itemDoubleClicked(QListWidgetItem *item);
+    void on_sellButton_clicked();
+    void cargoSellAccepted();
+    void updateShipStorage();
+    void profitSent(const double sentProfit);
 
 };
 #endif // WIDGET_H
