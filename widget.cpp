@@ -100,7 +100,7 @@ void Widget::profitSent(const double sentProfit)
 
 void Widget::loadShipCombo()
 {
-    shipList.getList();
+    //shipList.getList();
     std::vector<Ship> list;
     int count;
 
@@ -409,5 +409,20 @@ void Widget::updateShipStorage()
                                      " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
     ui->cargoHoldProgressBar->setValue(100-(((double)shipList.getCurrentCap(shipIndex) / shipList.getCargoCap(shipIndex)) * 100));
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
+}
+
+
+void Widget::on_pushButton_clicked()
+{
+    shipList.sortByCargo();
+    ui->shipComboBox->setDisabled(true);
+    qDebug() << 1;
+    for(int i = 0; i < shipList.getShipCount(); i++)
+        ui->shipComboBox->removeItem(i);
+    qDebug() << 2;
+    loadShipCombo();
+qDebug() << 3;
+    ui->shipComboBox->setEnabled(true);
+qDebug() << 4;
 }
 

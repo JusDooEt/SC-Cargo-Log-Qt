@@ -6,6 +6,7 @@
 #include <QDir>
 #include <vector>
 #include <QFile>
+#include <iostream>
 
 enum ShipType
 {
@@ -79,13 +80,14 @@ private:
 
     void CreateList();
     ShipType setShipType(QString typeStr);
-    friend void merge(std::vector<Ship> list, int const left,
+    void merge(std::vector<Ship>& array, int const left,
                       int const mid, int const right);
-    friend void mergeSort(std::vector<Ship> list,
+    void mergeSort(std::vector<Ship> array,
                           int const begin,
                           int const end);
 
 
+    void printArray(std::vector<Ship> A, int size);
 signals:
 };
 

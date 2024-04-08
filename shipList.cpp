@@ -50,7 +50,7 @@ void ShipList::setType(int index, ShipType type)
 
 void ShipList::sortByCargo()
 {
-
+    mergeSort(list, 0, list.size() - 1);
 }
 
 
@@ -196,7 +196,7 @@ ShipType ShipList::setShipType(QString typeStr)
 }
 
 
-void merge(std::vector<Ship> array, int const left,
+void ShipList::merge(std::vector<Ship>& array, int const left,
            int const mid, int const right)
 {
     auto const subArrayOne = mid - left + 1;
@@ -264,10 +264,11 @@ void merge(std::vector<Ship> array, int const left,
 
     delete rightArray;
     delete leftArray;
+    printArray(array, array.size());
 }
 
 
-void mergeSort(std::vector<Ship> array,
+void ShipList::mergeSort(std::vector<Ship> array,
                int const begin,
                int const end)
 {
@@ -279,4 +280,11 @@ void mergeSort(std::vector<Ship> array,
     mergeSort(array, begin, mid);
     mergeSort(array, mid + 1, end);
     merge(array, begin, mid, end);
+}
+
+
+void ShipList::printArray(std::vector<Ship> A, int size)
+{
+    for (auto i = 0; i < size; i++)
+        qDebug() << A[i].make << " " << A[i].model;
 }

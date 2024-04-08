@@ -78,5 +78,6 @@ private slots:
     void updateShipStorage();
     void profitSent(const double sentProfit);
 
+    void on_pushButton_clicked();
 };
 #endif // WIDGET_H
