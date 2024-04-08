@@ -18,6 +18,14 @@ enum ShipType
 
 struct Ship{
     //Overloaded Constructor
+    Ship()
+    {
+        this->make = "";
+        this->model = "";
+        this->cargoCap = 0;
+        this->type = ERROR;
+        this->currentCap = 0;
+    }
     Ship(QString make, QString model, int cargoCap, ShipType type)
     {
         this->make = make;
@@ -33,6 +41,8 @@ struct Ship{
     int         cargoCap;
     int         currentCap;
     ShipType    type;
+
+
 };
 
 class ShipList : public QObject
@@ -49,6 +59,7 @@ public:
     void setCargoCap(int index, int cargoCap);
     void setCurrentCap(int index, int currentCap);
     void setType(int index, ShipType type);
+    void sortByCargo();
 
     //Accessors
     std::vector<Ship> getList() const;
@@ -68,6 +79,11 @@ private:
 
     void CreateList();
     ShipType setShipType(QString typeStr);
+    friend void merge(std::vector<Ship> list, int const left,
+                      int const mid, int const right);
+    friend void mergeSort(std::vector<Ship> list,
+                          int const begin,
+                          int const end);
 
 
 signals:

@@ -651,7 +651,7 @@ QListWidget::item
              </property>
              <property name="font">
               <font>
-               <pointsize>11</pointsize>
+               <pointsize>14</pointsize>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -668,6 +668,13 @@ QListWidget::item
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -723,7 +730,7 @@ QListWidget::item
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>12</pointsize>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -749,7 +756,7 @@ QListWidget::item
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>12</pointsize>
                <italic>false</italic>
                <bold>false</bold>
               </font>
@@ -786,6 +793,13 @@ QListWidget::item
             <layout class="QHBoxLayout" name="horizontalLayout_9">
              <item>
               <widget class="QLabel" name="hoursLabel">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Hours</string>
                </property>
@@ -796,6 +810,13 @@ QListWidget::item
              </item>
              <item>
               <widget class="QLabel" name="minutesLabel">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Minutes</string>
                </property>
@@ -806,6 +827,13 @@ QListWidget::item
              </item>
              <item>
               <widget class="QLabel" name="secondsLabel">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Seconds</string>
                </property>
@@ -1008,10 +1036,25 @@ border-radius: 2px;</string>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QLineEdit" name="cargoNamelineEdit"/>
+            <widget class="QLineEdit" name="cargoNamelineEdit">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QDoubleSpinBox" name="priceDoubleSpinBox">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
@@ -1025,6 +1068,13 @@ border-radius: 2px;</string>
            </item>
            <item>
             <widget class="QSpinBox" name="amountSpinBox">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
