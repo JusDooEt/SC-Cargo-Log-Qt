@@ -38,6 +38,7 @@ Widget::Widget(QWidget *parent)
 //    selectedShip->cargoCap = ui->cargoCapSpinBox->value();
 //    selectedShip->currentCap = 0;
 
+    // Initialize Members
     runStopWatch = false;
     sellAll      = false;
     sellButtonEnabled = false;
@@ -47,6 +48,7 @@ Widget::Widget(QWidget *parent)
     sellAllDialog = nullptr;
     sellDialog = nullptr;
 
+    // Initialize Trade run Timer
     hr = 00;
     min = 00;
     sec = 00;
@@ -61,6 +63,7 @@ Widget::Widget(QWidget *parent)
     ui->startBalDoubleSpinBox->setValue(startingBal);
     ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
 
+    // Connect signals and slots
     connect(this, &Widget::shipStorageChanged, this, &Widget::updateShipStorage);
     connect(this, &Widget::shipChanged, this, &Widget::updateShip);
     //connect(ui->cargoHoldListWidget, &QListWidget::itemDoubleClicked, this)
@@ -75,7 +78,6 @@ Widget::~Widget()
 //    delete selectedShip;
 
 }
-
 
 void Widget::profitSent(const double sentProfit)
 {
@@ -135,8 +137,6 @@ void Widget::updateTimer()
     ui->editSecLabel->setText(sec < 10 ? "0" + QString::number(sec) : QString::number(sec));
 }
 
-
-
 // If startBalDoubleSpinBox value is changed:
 //      store current value in startingBal
 void Widget::on_startBalDoubleSpinBox_valueChanged(double arg1)
@@ -147,7 +147,6 @@ void Widget::on_startBalDoubleSpinBox_valueChanged(double arg1)
     // qDebug() << "startingBal = " << startingBal;
     // qDebug() << "CurrentBal = " << currentBal;
 }
-
 
 void Widget::on_beginButton_clicked()
 {
@@ -189,7 +188,6 @@ void Widget::on_beginButton_clicked()
     // stream << "Ship Name: " << shipList.getName(shipIndex);
 }
 
-
 void Widget::on_endButton_clicked()
 {
     ui->beginButton->setDisabled(false);
@@ -208,7 +206,6 @@ void Widget::on_endButton_clicked()
     ui->startBalDoubleSpinBox->setValue(startingBal);
     //File.close();
 }
-
 
 void Widget::on_buyButton_clicked()
 {
@@ -265,9 +262,6 @@ void Widget::on_buyButton_clicked()
 
 }
 
-
-
-
 void Widget::on_sellAllButton_clicked()
 {
     sellAllDialog = new SellAllDialog(this, startingBal, currentBal);
@@ -275,9 +269,6 @@ void Widget::on_sellAllButton_clicked()
 
     connect(sellAllDialog, &SellAllDialog::sendProfit, this, &Widget::profitSent);
 }
-
-
-
 
 void Widget::on_shipComboBox_currentIndexChanged(int index)
 {
@@ -294,23 +285,6 @@ void Widget::updateShip(int index)
     emit shipStorageChanged();
 }
 
-
-
-
-// void Widget::on_cargoHoldListWidget_currentRowChanged(int currentRow)
-// {
-//     qDebug() << "currentRow: " << currentRow;
-//     qDebug() << "Cargo[" << currentRow << "] name: " << cargoHold[currentRow].name;
-//     ui->cargoNamelineEdit->setText(cargoHold[currentRow].name);
-//     ui->priceDoubleSpinBox->setValue(cargoHold[currentRow].pricePerUnit);
-//     ui->amountSpinBox->setValue(cargoHold[currentRow].amount);
-//     ui->amountSpinBox->setMaximum(cargoHold[currentRow].amount);
-//     ui->sellButton->setEnabled(true);
-// }
-
-
-
-
 void Widget::on_cargoNamelineEdit_textEdited(const QString &arg1)
 {
     if(ui->sellButton->isEnabled())
@@ -322,7 +296,6 @@ void Widget::on_cargoNamelineEdit_textEdited(const QString &arg1)
     }
 
 }
-
 
 void Widget::on_cargoHoldListWidget_itemDoubleClicked(QListWidgetItem *item)
 {
@@ -337,7 +310,6 @@ void Widget::on_cargoHoldListWidget_itemDoubleClicked(QListWidgetItem *item)
     ui->amountSpinBox->setValue(cargoHold[cargoIndex].amount);
     ui->sellButton->setEnabled(true);
 }
-
 
 void Widget::on_sellButton_clicked()
 {

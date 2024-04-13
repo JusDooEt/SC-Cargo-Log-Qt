@@ -10,11 +10,13 @@ struct Cargo{
         this->pricePerUnit = pricePerUnit;
         this->value = value;
         this->amount = amount;
+        sold = false;
     }
     QString name;
     double  pricePerUnit;
     double  value;
     int     amount;
+    bool    sold;
 };
 
 namespace Ui {

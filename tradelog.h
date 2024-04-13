@@ -2,6 +2,18 @@
 #define TRADELOG_H
 
 #include <QWidget>
+#include <QDateTime>
+#include "selldialog.h"
+
+struct TradeRun
+{
+    QDateTime date;
+    QDateTime runTime;
+    QString   ship;
+    double    profit;
+    double    profitPerMin;
+    Cargo*    cargoAr;
+};
 
 namespace Ui {
 class TradeLog;

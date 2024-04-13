@@ -6,13 +6,170 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>240</height>
+    <width>605</width>
+    <height>543</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+	color: rgb(255, 255, 255);
+	background-color: rgba(3, 0, 38,150);
+	font: &quot;Yu Gothic UI Semibold&quot;;
+}
+
+QComboBox
+{
+	color: rgb(85, 255, 255);
+	border: 2px solid white;
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0);
+	border-style: outset;
+}
+
+QPushButton
+{
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 6px;
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QPushButton:Disabled
+{
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 6px;
+	border-color: rgb(181, 181, 181);
+	
+}
+
+QPushButton:hover
+{
+	border: 4px solid white;
+}
+
+QPushButton:pressed
+{
+	background-color: rgba(255, 255, 255, 150);
+	border: 5px solid white;
+}
+
+QLabel
+{
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QLineEdit
+{
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QDoubleSpinBox
+{
+	border: 3px solid white;
+	border-radius: 8px;
+	background-color: rgba(3, 0, 38,100);
+}
+QSpinBox
+{
+	border: 3px solid white;
+	border-radius: 8px;
+	background-color: rgba(3, 0, 38,100);
+}
+
+QLineEdit
+{
+	border: 3px solid white;
+	border-radius: 8px;
+}
+
+QProgressBar
+{
+	border: 2px solid white;
+	border-radius: 8px;
+	border-style: outset;
+	
+	background-color: rgba(3, 0, 38,150)
+}
+
+QProgressBar::chunk
+{
+	border: 2px solid rgb(255, 255, 255);
+	border-radius: px;
+	background-color: rgb(255, 255, 255);
+	width: 10px;
+	margin: 1px;
+
+
+}
+
+QListWidget::item
+{
+	color: rgb(85, 255, 255);
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Trade Runs</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listWidget"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Details</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textEdit"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
