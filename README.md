@@ -17,11 +17,13 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 ![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
 
 
+
 ## Current Functionality
 - User balance
   - Starting balance will be read and stored whenever the value in the spinbox changes
   - Current balance will also be updated to match the starting balance if the begin route button has not been pressed and the timer has not been started.
 - Ships
+
   - The program reads from a .txt file in order to initialize the list of ships the user can choose from.
   - The list of ships will be displayed to the user using a combo box.
   - The combo box selection will be used to manipulate the list and make sure the correct ship is selected for the trade run.
@@ -32,11 +34,20 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
       - The programmer can change the member being compared using an ENUM flag during the quickSort function call. (Flags: CARGO, NAME)
 - Cargo
   - Buy Button
-    - Cargo name, price per unit, amount, and value will be read in and stored in a new dynamic Cargo object and added to the cargo stack. The top of the stack is declared in the widget class.
+    - Cargo name, price per unit, amount, and value will be read in and stored in a new dynamic Cargo object and added to the cargoHold vector.
     - A string describing the cargo purchased will be output to the Cargo Hold text edit box
     - Will verify if the value and amount is viable based on the cargo capacity and starting balance input before the route was started
       - If the purchase is not valid a dialog box will appear to warn the user and a cargo object will NOT be created and added to the stack;
     - Will update the current balance, current cargo amount and cargo hold value labels to correct values after buying cargo
+  - Sell Button
+    - The sell button will only be enabled and functional if the user double clicks an item that is in their cargo hold which is visually indicated on the right half of the program.
+    - Cargo name, price per unit, amount, and value will be read in and stored in a new dynamic CargoSold object.
+    - The values will be sent to be displayed in a pop up dialog box.
+      - The dialog box will show the user the amount, price, and profit of the cargo that is being sold
+      - The user can either confirm or deny the sale
+      - Confirming the sale will adjust or delete the cargo item in the user's cargo hold. A confirmed sale will also disable the sell button in the main window.
+        - The profit of the sale will be sent back to the main window and the user's current balance, and profit labels will be updated to match the input and calculated values.
+        - Cargo input components like name, price and amount will be reset.
   - Sell All Button
     - This button will open a dialog window to confirm that the user wants to sell all of their cargo in storage.
       - The dialog box will ask for a total sell price and give live information about the user's current balance and profit.
