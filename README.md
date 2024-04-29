@@ -27,7 +27,7 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
   - The combo box selection will be used to manipulate the list and make sure the correct ship is selected for the trade run.
   - The list of ships can be sorted in ascending order by either their name or cargo capacity.
     - The sorting will change the vector or ship pointer and then refresh the combo box to correlate with the newly sorted list.
-    - The Quick Sort algorithm is used to sort the vector of ship pointers.
+    - The [Quick Sort](https://github.com/JusDooEt/Ship-Sorting) algorithm is used to sort the vector of ship pointers.
       - This algorithm has been modified to allow it to compare members of the Ship struct.
       - The programmer can change the member being compared using an ENUM flag during the quickSort function call. (Flags: CARGO, NAME)
 - Cargo
