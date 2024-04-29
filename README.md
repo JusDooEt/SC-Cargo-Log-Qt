@@ -1,4 +1,9 @@
 # SC-Cargo-Log w/ QtCreator
+## Newest Update
+- The Ship Selection combo box in the top left of the program can now be sorted by the user using two buttons representing sorting the list by name or by cargo capacity
+  - The Quick Sort algorithm was used to sort the ships.
+    - The algorithm was modified in order to work with the Ship type object.
+    - The algorithm also allows the programmer to choose which ship member to sort by using an enum flag, either 'CARGO' or 'NAME'.  
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
 ### Motive
@@ -6,7 +11,9 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 
 
 ## Current build
-[![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE)
+<!-- [![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE) -->
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/75224936-9c34-49d3-9ec3-1c9cd6ec8b9e)
+
 ![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
 
 
@@ -15,12 +22,14 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
   - Starting balance will be read and stored whenever the value in the spinbox changes
   - Current balance will also be updated to match the starting balance if the begin route button has not been pressed and the timer has not been started.
 - Ships
-  - The program will read in a ship name entered by the user in the corresponding line edit text box
-    - This name is default set to “Crusader, C2 Hercules Starlifter” on app start for testing purposes and as an example
-    - The class variable where the name is stored will be updated every time the user hits the return key while the line edit text box is selected and in focus
-  - The program will read and record the ship cargo capacity input by the user in the corresponding spinbox
-    - This value is set to 696 by default on app start to make it align with the default ship name
-    - The cargoCap value in the spinBox will also update the label below the cargo hold list box to match with the input value
+  - The program reads from a .txt file in order to initialize the list of ships the user can choose from.
+  - The list of ships will be displayed to the user using a combo box.
+  - The combo box selection will be used to manipulate the list and make sure the correct ship is selected for the trade run.
+  - The list of ships can be sorted in ascending order by either their name or cargo capacity.
+    - The sorting will change the vector or ship pointer and then refresh the combo box to correlate with the newly sorted list.
+    - The Quick Sort algorithm is used to sort the vector of ship pointers.
+      - This algorithm has been modified to allow it to compare members of the Ship struct.
+      - The programmer can change the member being compared using an ENUM flag during the quickSort function call. (Flags: CARGO, NAME)
 - Cargo
   - Buy Button
     - Cargo name, price per unit, amount, and value will be read in and stored in a new dynamic Cargo object and added to the cargo stack. The top of the stack is declared in the widget class.
@@ -40,8 +49,9 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 
 ## To-Do
 - [x] Finish sell all button functionality
-- [ ] Finish sell button functionality
+- [x] Finish sell button functionality
 - [x] Create profit label functionality
+- [x] Created Ship list sort functionality
 - [ ] Create finished run stats page
 
 
