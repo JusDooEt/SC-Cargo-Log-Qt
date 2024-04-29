@@ -51,6 +51,7 @@ private:
     double              totalValue;
     double              sellValue;
     double              profit;
+    SortType            sort;
 
 
     void loadShipCombo();
@@ -68,7 +69,7 @@ private slots:
     void on_endButton_clicked();
     void on_buyButton_clicked();
     void on_sellAllButton_clicked();
-    void on_shipComboBox_currentIndexChanged(int index);
+    //void on_shipComboBox_currentIndexChanged(int index);
     void updateShip(int index);
     //void on_cargoHoldListWidget_currentRowChanged(int currentRow);
     void on_cargoNamelineEdit_textEdited(const QString &arg1);
@@ -78,5 +79,9 @@ private slots:
     void updateShipStorage();
     void profitSent(const double sentProfit);
 
+    //void on_pushButton_clicked();
+    void on_cargoSortButton_clicked();
+    void on_shipComboBox_activated(int index);
+    void on_nameSortButton_clicked();
 };
 #endif // WIDGET_H

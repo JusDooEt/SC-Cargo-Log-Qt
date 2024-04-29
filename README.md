@@ -1,4 +1,9 @@
 # SC-Cargo-Log w/ QtCreator
+## Newest Update
+- The Ship Selection combo box in the top left of the program can now be sorted by the user using two buttons representing sorting the list by name or by cargo capacity
+  - The Quick Sort algorithm was used to sort the ships.
+    - The algorithm was modified in order to work with the Ship type object.
+    - The algorithm also allows the programmer to choose which ship member to sort by using an enum flag, either 'CARGO' or 'NAME'.  
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
 ### Motive
@@ -6,9 +11,10 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 
 
 ## Current build
-![build-imageV1-3](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/001d59e6-afd1-4992-9d07-7d4876171d57)
+<!-- [![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE) -->
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/75224936-9c34-49d3-9ec3-1c9cd6ec8b9e)
 
-https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/3e01f509-da42-48ab-b288-e7e315172ace
+![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
 
 
 
@@ -17,10 +23,15 @@ https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/3e01f509-da42-48ab-
   - Starting balance will be read and stored whenever the value in the spinbox changes
   - Current balance will also be updated to match the starting balance if the begin route button has not been pressed and the timer has not been started.
 - Ships
-  - The user will use a ComboBox module to select from a list of commonly used cargo ships defined in shipList.txt
-    - The Ship List class will initialize a vector of ships from a text file. That vector is then used to view and manipulate ship data.
-  - The ship name label above the cargo hold will be updated whenever a ship is selected from the combo box.
-  - The ship inventory labels will be updated whenever a ship is selected from the combo box.
+
+  - The program reads from a .txt file in order to initialize the list of ships the user can choose from.
+  - The list of ships will be displayed to the user using a combo box.
+  - The combo box selection will be used to manipulate the list and make sure the correct ship is selected for the trade run.
+  - The list of ships can be sorted in ascending order by either their name or cargo capacity.
+    - The sorting will change the vector or ship pointer and then refresh the combo box to correlate with the newly sorted list.
+    - The [Quick Sort](https://github.com/JusDooEt/Ship-Sorting) algorithm is used to sort the vector of ship pointers.
+      - This algorithm has been modified to allow it to compare members of the Ship struct.
+      - The programmer can change the member being compared using an ENUM flag during the quickSort function call. (Flags: CARGO, NAME)
 - Cargo
   - Buy Button
     - Cargo name, price per unit, amount, and value will be read in and stored in a new dynamic Cargo object and added to the cargoHold vector.
@@ -51,6 +62,7 @@ https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/3e01f509-da42-48ab-
 - [x] Finish sell all button functionality
 - [x] Finish sell button functionality
 - [x] Create profit label functionality
+- [x] Created Ship list sort functionality
 - [ ] Create finished run stats page
 
 

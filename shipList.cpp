@@ -17,39 +17,51 @@ void ShipList::setMake(int index, QString make)
 {
     if(index >= count)
         return;
-    list[index].make = make;
+    list[index]->make = make;
 }
 
 void ShipList::setModel(int index, QString model)
 {
     if(index >= count)
         return;
-    list[index].model = model;
+    list[index]->model = model;
 }
 
 void ShipList::setCargoCap(int index, int cargoCap)
 {
     if(index >= count)
         return;
-    list[index].cargoCap = cargoCap;
+    list[index]->cargoCap = cargoCap;
 }
 
 void ShipList::setCurrentCap(int index, int currentCap)
 {
     if(index >= count)
         return;
-    list[index].currentCap = currentCap;
+    list[index]->currentCap = currentCap;
 }
 
 void ShipList::setType(int index, ShipType type)
 {
     if(index >= count)
         return;
-    list[index].type = type;
+    list[index]->type = type;
+}
+
+void ShipList::sortByCargo()
+{
+    quickSort(list, 0, list.size() - 1, CARGO);
+
+}
+
+void ShipList::sortByName()
+{
+    quickSort(list, 0, list.size() - 1, NAME);
+
 }
 
 
-std::vector<Ship> ShipList::getList() const
+std::vector<Ship*> ShipList::getList() const
 {
     return list;
 }
@@ -63,7 +75,7 @@ QString ShipList::getName(int index) const
 {
     if(index >= count)
         return NULL;
-    return list[index].make + ", " + list[index].model;
+    return list[index]->make + ", " + list[index]->model;
 }
 
 QString ShipList::getMake(int index) const
@@ -71,7 +83,7 @@ QString ShipList::getMake(int index) const
     if(index >= count)
         return NULL;
 
-    return list[index].make;
+    return list[index]->make;
 }
 
 QString ShipList::getModel(int index) const
@@ -79,7 +91,7 @@ QString ShipList::getModel(int index) const
     if(index >= count)
         return NULL;
 
-    return list[index].model;
+    return list[index]->model;
 }
 
 int ShipList::getCargoCap(int index) const
@@ -87,7 +99,7 @@ int ShipList::getCargoCap(int index) const
     if(index >= count)
         return -1;
 
-    return list[index].cargoCap;
+    return list[index]->cargoCap;
 }
 
 int ShipList::getCurrentCap(int index) const
@@ -95,7 +107,7 @@ int ShipList::getCurrentCap(int index) const
     if(index >= count)
         return -1;
 
-    return list[index].currentCap;
+    return list[index]->currentCap;
 }
 
 ShipType ShipList::getType(int index) const
@@ -103,13 +115,13 @@ ShipType ShipList::getType(int index) const
     if(index >= count)
         return ERROR;
 
-    return list[index].type;
+    return list[index]->type;
 }
 
-Ship ShipList::getShip(int index) const
+Ship* ShipList::getShip(int index) const
 {
     if(index >= count)
-        return Ship("", "", 0, ERROR);
+        return nullptr;
 
     return list[index];
 }
@@ -120,6 +132,7 @@ void ShipList::CreateList()
     QString     model;
     int         shipInv;
     ShipType    type;
+    Ship*       shipPtr;
 
     QFile File(inFile);
     if(!File.exists())
@@ -135,20 +148,25 @@ void ShipList::CreateList()
     QTextStream stream(&File);
     while (!stream.atEnd())
     {
+        // Read In Data from File into Variables
         qDebug() << "reading file...";
         make = stream.readLine();
         model = stream.readLine();
         shipInv = stream.readLine().toInt();
         QString typeStr = stream.readLine();
-        list.push_back(Ship(make, model, shipInv, setShipType(typeStr)));
+
+        // Create a new ship object with input variables
+        shipPtr = new Ship(make, model, shipInv, setShipType(typeStr));
+        list.push_back(shipPtr);
         count++;
+        shipPtr = nullptr;
 
         // Debug output in console
         qDebug() << "list[" << count - 1 << "]";
-        qDebug() << "Make: " << list[count - 1].make;
-        qDebug() << "Model: " << list[count - 1].model;
-        qDebug() << "Cargo Cap: " << list[count - 1].cargoCap;
-        switch (list[count-1].type) {
+        qDebug() << "Make: " << list[count - 1]->make;
+        qDebug() << "Model: " << list[count - 1]->model;
+        qDebug() << "Cargo Cap: " << list[count - 1]->cargoCap;
+        switch (list[count-1]->type) {
         case SMALL:
             qDebug() << "Type: SMALL";
             break;
@@ -188,4 +206,66 @@ ShipType ShipList::setShipType(QString typeStr)
         qDebug() << "error setting type";
         return ERROR;
     }
+}
+
+void ShipList::swap(Ship*& a, Ship*& b)
+{
+    //cout << "<swapping " << a << " & " << b << ">\n";
+    Ship* temp;
+    temp = a;
+    a = b;
+    b = temp;
+    //cout << "<Finished>\n";
+}
+
+int ShipList::partitionCargo(std::vector<Ship*>& arr, int low, int high)
+{
+    int pivot = arr[high]->cargoCap;
+    int i = low - 1;
+
+    for (int j = low; j <= high; j++)
+    {
+        if (arr[j]->cargoCap < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+int ShipList::partitionString(std::vector<Ship*>& arr, int low, int high)
+{
+    QString pivot = arr[high]->name;
+    int i = low - 1;
+
+    for (int j = low; j <= high; j++)
+    {
+        if (arr[j]->name < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+void ShipList::quickSort(std::vector<Ship*>& arr, int low, int high, SortType mode)
+{
+    if (low < high)
+    {
+        int pivot = mode == CARGO ? partitionCargo(arr, low, high) : partitionString(arr, low, high);
+
+        quickSort(arr, low, pivot - 1, mode);
+        quickSort(arr, pivot + 1, high, mode);
+    }
+}
+
+
+void ShipList::printArray(std::vector<Ship*> A, int size)
+{
+    for (auto i = 0; i < size; i++)
+        qDebug() << A[i]->make << " " << A[i]->model;
 }

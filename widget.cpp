@@ -17,6 +17,7 @@ Widget::Widget(QWidget *parent)
     ui->sellButton->setDisabled(true);
     ui->sellAllButton->setDisabled(true);
     ui->endButton->setDisabled(true);
+    ui->nameSortButton->setDisabled(true);
 
     // ui->currentBalanceLabel->setTextFormat(Qt::FixedNotation)
 
@@ -64,6 +65,7 @@ Widget::Widget(QWidget *parent)
     connect(this, &Widget::shipStorageChanged, this, &Widget::updateShipStorage);
     connect(this, &Widget::shipChanged, this, &Widget::updateShip);
     //connect(ui->cargoHoldListWidget, &QListWidget::itemDoubleClicked, this)
+    sort = NAME;
 }
 
 //Deconstructor
@@ -100,8 +102,8 @@ void Widget::profitSent(const double sentProfit)
 
 void Widget::loadShipCombo()
 {
-    shipList.getList();
-    std::vector<Ship> list;
+    //shipList.getList();
+    std::vector<Ship*> list;
     int count;
 
     list = shipList.getList();
@@ -109,7 +111,7 @@ void Widget::loadShipCombo()
     ui->shipComboBox->setMaxCount(count);
     for(int i = 0; i < count; i++)
     {
-        ui->shipComboBox->addItem(list[i].make + ", " + list[i].model);
+        ui->shipComboBox->addItem(list[i]->make + ", " + list[i]->model);
     }
 }
 
@@ -278,12 +280,13 @@ void Widget::on_sellAllButton_clicked()
 
 
 
-
+/*
 void Widget::on_shipComboBox_currentIndexChanged(int index)
 {
     shipIndex = index;
     emit shipChanged(index);
 }
+*/
 
 void Widget::updateShip(int index)
 {
@@ -409,5 +412,69 @@ void Widget::updateShipStorage()
                                      " / " + QString::number(shipList.getCargoCap(shipIndex)) + " SCU");
     ui->cargoHoldProgressBar->setValue(100-(((double)shipList.getCurrentCap(shipIndex) / shipList.getCargoCap(shipIndex)) * 100));
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
+}
+
+/*
+void Widget::on_pushButton_clicked()
+{
+    shipList.sortByCargo();
+    ui->shipComboBox->setDisabled(true);
+    qDebug() << 1;
+    for(int i = 0; i < shipList.getShipCount(); i++)
+        ui->shipComboBox->removeItem(i);
+    qDebug() << 2;
+    loadShipCombo();
+qDebug() << 3;
+    ui->shipComboBox->setEnabled(true);
+qDebug() << 4;
+}
+*/
+
+void Widget::on_cargoSortButton_clicked()
+{
+    if(sort == CARGO)
+        return;
+
+    ui->cargoSortButton->setDisabled(true);
+    ui->nameSortButton->setEnabled(true);
+
+    sort = CARGO;
+    setDisabled(true);
+    ui->shipComboBox->setDisabled(true);
+
+    ui->shipComboBox->clear();
+    shipList.sortByCargo();
+    loadShipCombo();
+
+    ui->shipComboBox->setEnabled(true);
+    setEnabled(true);
+}
+
+
+void Widget::on_shipComboBox_activated(int index)
+{
+    shipIndex = index;
+    emit shipChanged(index);
+}
+
+
+void Widget::on_nameSortButton_clicked()
+{
+    if(sort == NAME)
+        return;
+
+    ui->nameSortButton->setDisabled(true);
+    ui->cargoSortButton->setEnabled(true);
+
+    sort = NAME;
+    setDisabled(true);
+    ui->shipComboBox->setDisabled(true);
+
+    ui->shipComboBox->clear();
+    shipList.sortByName();
+    loadShipCombo();
+
+    ui->shipComboBox->setEnabled(true);
+    setEnabled(true);
 }
 
