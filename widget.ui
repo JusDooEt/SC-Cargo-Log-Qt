@@ -1263,7 +1263,7 @@ border-radius: 2px;</string>
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="cargoSortButton">
      <property name="text">
       <string>Filter by Cargo</string>
      </property>

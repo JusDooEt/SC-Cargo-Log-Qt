@@ -101,7 +101,7 @@ void Widget::profitSent(const double sentProfit)
 void Widget::loadShipCombo()
 {
     //shipList.getList();
-    std::vector<Ship> list;
+    std::vector<Ship*> list;
     int count;
 
     list = shipList.getList();
@@ -109,7 +109,7 @@ void Widget::loadShipCombo()
     ui->shipComboBox->setMaxCount(count);
     for(int i = 0; i < count; i++)
     {
-        ui->shipComboBox->addItem(list[i].make + ", " + list[i].model);
+        ui->shipComboBox->addItem(list[i]->make + ", " + list[i]->model);
     }
 }
 
@@ -411,7 +411,7 @@ void Widget::updateShipStorage()
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
 }
 
-
+/*
 void Widget::on_pushButton_clicked()
 {
     shipList.sortByCargo();
@@ -424,5 +424,23 @@ void Widget::on_pushButton_clicked()
 qDebug() << 3;
     ui->shipComboBox->setEnabled(true);
 qDebug() << 4;
+}
+*/
+
+void Widget::on_cargoSortButton_clicked()
+{
+    setDisabled(true);
+    shipList.sortByCargo();
+    shipList.printArray(shipList.getList(), shipList.getList().size());
+    ui->shipComboBox->setDisabled(true);
+    qDebug() << 1;
+    for(int i = 0; i < shipList.getShipCount(); i++)
+        ui->shipComboBox->removeItem(i);
+    qDebug() << 2;
+    loadShipCombo();
+    qDebug() << 3;
+    ui->shipComboBox->setEnabled(true);
+    qDebug() << 4;
+    setEnabled(true);
 }
 

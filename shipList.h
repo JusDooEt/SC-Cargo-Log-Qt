@@ -6,7 +6,7 @@
 #include <QDir>
 #include <vector>
 #include <QFile>
-#include <iostream>
+
 
 enum ShipType
 {
@@ -63,7 +63,7 @@ public:
     void sortByCargo();
 
     //Accessors
-    std::vector<Ship> getList() const;
+    std::vector<Ship*> getList() const;
     int getShipCount() const;
     QString getName(int index) const;
     QString getMake(int index) const;
@@ -71,23 +71,19 @@ public:
     int getCargoCap(int index)const;
     int getCurrentCap(int index) const;
     ShipType getType(int index) const;
-    Ship getShip(int index) const;
+    Ship* getShip(int index) const;
+    void printArray(std::vector<Ship*> A, int size);
 
 private:
-    std::vector<Ship> list;
+    std::vector<Ship*> list;
     int count;
     QString inFile;
 
     void CreateList();
     ShipType setShipType(QString typeStr);
-    void merge(std::vector<Ship>& array, int const left,
-                      int const mid, int const right);
-    void mergeSort(std::vector<Ship> array,
-                          int const begin,
-                          int const end);
 
 
-    void printArray(std::vector<Ship> A, int size);
+
 signals:
 };
 
