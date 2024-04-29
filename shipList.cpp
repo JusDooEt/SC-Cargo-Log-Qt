@@ -50,7 +50,14 @@ void ShipList::setType(int index, ShipType type)
 
 void ShipList::sortByCargo()
 {
-    //cargoQuickSort(list, 0, list.size() - 1);
+    quickSort(list, 0, list.size() - 1, CARGO);
+
+}
+
+void ShipList::sortByName()
+{
+    quickSort(list, 0, list.size() - 1, NAME);
+
 }
 
 
@@ -201,8 +208,60 @@ ShipType ShipList::setShipType(QString typeStr)
     }
 }
 
+void ShipList::swap(Ship*& a, Ship*& b)
+{
+    //cout << "<swapping " << a << " & " << b << ">\n";
+    Ship* temp;
+    temp = a;
+    a = b;
+    b = temp;
+    //cout << "<Finished>\n";
+}
 
+int ShipList::partitionCargo(std::vector<Ship*>& arr, int low, int high)
+{
+    int pivot = arr[high]->cargoCap;
+    int i = low - 1;
 
+    for (int j = low; j <= high; j++)
+    {
+        if (arr[j]->cargoCap < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+int ShipList::partitionString(std::vector<Ship*>& arr, int low, int high)
+{
+    QString pivot = arr[high]->name;
+    int i = low - 1;
+
+    for (int j = low; j <= high; j++)
+    {
+        if (arr[j]->name < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+void ShipList::quickSort(std::vector<Ship*>& arr, int low, int high, SortType mode)
+{
+    if (low < high)
+    {
+        int pivot = mode == CARGO ? partitionCargo(arr, low, high) : partitionString(arr, low, high);
+
+        quickSort(arr, low, pivot - 1, mode);
+        quickSort(arr, pivot + 1, high, mode);
+    }
+}
 
 
 void ShipList::printArray(std::vector<Ship*> A, int size)

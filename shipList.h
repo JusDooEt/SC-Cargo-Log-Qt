@@ -17,6 +17,12 @@ enum ShipType
     ERROR
 };
 
+enum SortType
+{
+    CARGO,
+    NAME,
+};
+
 struct Ship{
     //Overloaded Constructor
     Ship()
@@ -26,6 +32,7 @@ struct Ship{
         this->cargoCap = 0;
         this->type = ERROR;
         this->currentCap = 0;
+        this->name = "";
     }
     Ship(QString make, QString model, int cargoCap, ShipType type)
     {
@@ -34,6 +41,7 @@ struct Ship{
         this->cargoCap = cargoCap;
         this->type = type;
         currentCap = 0;
+        this->name = make + ", " + model;
     }
 
     //Ship Variables
@@ -42,6 +50,7 @@ struct Ship{
     int         cargoCap;
     int         currentCap;
     ShipType    type;
+    QString     name;
 
 
 };
@@ -61,6 +70,7 @@ public:
     void setCurrentCap(int index, int currentCap);
     void setType(int index, ShipType type);
     void sortByCargo();
+    void sortByName();
 
     //Accessors
     std::vector<Ship*> getList() const;
@@ -73,6 +83,11 @@ public:
     ShipType getType(int index) const;
     Ship* getShip(int index) const;
     void printArray(std::vector<Ship*> A, int size);
+
+    void swap(Ship*& a, Ship*& b);
+    int partitionCargo(std::vector<Ship*>& arr, int low, int high);
+    int partitionString(std::vector<Ship*>& arr, int low, int high);
+    void quickSort(std::vector<Ship*>& arr, int low, int high, SortType mode);
 
 private:
     std::vector<Ship*> list;
