@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QTimer>
 #include <QListWidget>
+#include <QtSql/QSql>
+#include <QSqlDatabase>
 #include "buyerrordialog.h"
 #include "sellalldialog.h"
 #include "shipList.h"
@@ -28,6 +30,7 @@ public:
 
 private:
 
+    QSqlDatabase  DBConnection;
     Ui::Widget*         ui;
     BuyErrorDialog*     cargoBuyError;
     SellAllDialog*      sellAllDialog;

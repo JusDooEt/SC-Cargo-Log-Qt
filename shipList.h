@@ -27,6 +27,7 @@ struct Ship{
     //Overloaded Constructor
     Ship()
     {
+        this->id = -1;
         this->make = "";
         this->model = "";
         this->cargoCap = 0;
@@ -34,8 +35,9 @@ struct Ship{
         this->currentCap = 0;
         this->name = "";
     }
-    Ship(QString make, QString model, int cargoCap, ShipType type)
+    Ship(int id, QString make, QString model, int cargoCap, ShipType type)
     {
+        this->id = id;
         this->make = make;
         this->model = model;
         this->cargoCap = cargoCap;
@@ -45,6 +47,7 @@ struct Ship{
     }
 
     //Ship Variables
+    int         id;
     QString     make;
     QString     model;
     int         cargoCap;
