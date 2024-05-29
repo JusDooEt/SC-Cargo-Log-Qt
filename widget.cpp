@@ -27,6 +27,13 @@ Widget::Widget(QWidget *parent)
     ui->shipComboBox->setCurrentIndex(shipIndex);
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
 
+    // Connect the SQL database
+    DBConnection = QSqlDatabase::addDatabase("QSQLITE");
+    DBConnection.setDatabaseName(QCoreApplication::applicationDirPath() + "/SC-Log.db");
+
+    // Validate Database connection
+    qDebug() << (DBConnection.open() ? "Database Connected" : "Database not connected");
+
     // Initialize editShipNameLabel
     ui->editShipNameLabel->setText(ui->shipComboBox->currentText());
 

@@ -1,4 +1,9 @@
+#include <QtSql/QSql>
+#include <QSqlDatabase>
+#include <QSqlError>
 #include "shipList.h"
+#include "qsqlquery.h"
+#include "qcoreapplication.h"
 #include <QDebug>
 
 ShipList::ShipList(QObject *parent) : QObject{parent}
@@ -128,13 +133,82 @@ Ship* ShipList::getShip(int index) const
 
 void ShipList::CreateList()
 {
+    int         id;
     QString     make;
     QString     model;
     int         shipInv;
     ShipType    type;
     Ship*       shipPtr;
+    QSqlDatabase DBConnection;
 
-    QFile File(inFile);
+    // Connect the SQL database
+    DBConnection = QSqlDatabase::addDatabase("QSQLITE");
+    DBConnection.setDatabaseName(QCoreApplication::applicationDirPath() + "/SC-Log.db");
+
+    QSqlQuery queryFindShip(DBConnection);
+    QString query = "SELECT * FROM ships;";
+
+    // Validate Database connection
+    qDebug() << (DBConnection.open() ? "Database Connected" : "Database not connected") << " - From shipList.cpp";
+
+    if(!queryFindShip.prepare(query))
+    {
+        qDebug() << "<ERROR> - " << QSqlError().text();
+    }
+    else
+    {
+        if(!queryFindShip.exec())
+        {
+            qDebug() << "<ERROR> - " << QSqlError().text();
+        }
+        else
+        {
+            count = 0;
+            while(queryFindShip.next())
+            {
+                id = queryFindShip.value("shipID").toInt();
+                make = queryFindShip.value("make").toString();
+                model = queryFindShip.value("model").toString();
+                shipInv = queryFindShip.value("capacity").toInt();
+
+                // Create a new ship object with input variables
+                shipPtr = new Ship(id,
+                                   make,
+                                   model,
+                                   shipInv,
+                                   setShipType(queryFindShip.value("class").toString()));
+                list.push_back(shipPtr);
+                count++;
+                shipPtr = nullptr;
+
+                // Debug output in console
+                qDebug() << "list[" << count - 1 << "]";
+                qDebug() << "Make: " << list[count - 1]->make;
+                qDebug() << "Model: " << list[count - 1]->model;
+                qDebug() << "Cargo Cap: " << list[count - 1]->cargoCap;
+                switch (list[count-1]->type) {
+                case SMALL:
+                    qDebug() << "Type: SMALL";
+                    break;
+                case MEDIUM:
+                    qDebug() << "Type: MEDIUM";
+                    break;
+                case LARGE:
+                    qDebug() << "Type: Large";
+                    break;
+                default:
+                    qDebug() << "Type: ERROR";
+                    break;
+                }
+                qDebug() << "-------------------------";
+            }
+        }
+    }
+
+
+    DBConnection.close();
+    qDebug() << "Finished Loading Ships. Database closed";
+    /*QFile File(inFile);
     if(!File.exists())
     {
         qDebug() << "File doesnt exist";
@@ -184,7 +258,8 @@ void ShipList::CreateList()
 
     }
     File.close();
-    qDebug() << "Finished Reading File";
+    qDebug() << "Finished Reading File";*/
+
 }
 
 ShipType ShipList::setShipType(QString typeStr)
