@@ -1,7 +1,29 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
-- The newest update has added a fleshed out database for the application. This will allow the application to switch from storing data of text files to a more sophisticated SQLite database.
-  - This database includes six tables and the structure is shown in the image below.
+- Ship list initialization
+  - The list of ships that is displayed in the combo box in the application is now initialized using data from the SC-Log database 'ships' table.
+  - The data is no longer read from text files and has a more sophisticated and secure method of saving and reinitializing data.
+  - The ship object was also given an ID member variable for future use of other tables and using the ID as a foreign key.
+    - This will make the data much more organized and easier to manipulate rather than using text files.
+  - Benefits
+    - This will overall make our program more efficient because inserting and removing one instance of data requires a simple SQL query rather than having to rewrite the entire text file.
+    - This also makes the code more readable and easier to modify in future use since we no longer need to deal with the jankiness of fstream and data types can more clearly be defined.
+
+## About
+This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
+### Motive
+As a self proclaimed space trucker in Star Citizen, there are many features missing from the game that I feel are required to give the best experience to all players taking on the Space trucker role. This program will make profits more readable and later be able to track trends and route efficiency in order to give all the data to each user to create the most profitable routes and cargo types.
+
+
+
+## Current build
+<!-- [![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE) -->
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/75224936-9c34-49d3-9ec3-1c9cd6ec8b9e)
+
+![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
+
+## SQLite Database (SC-Log.db)
+This database includes six tables and the structure is shown in the image below. It is used to store the user's information, ship information, trade routes, transactions, locations, and trade commodities.
 
 ![SC Trade Log DB](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/77cb4dbe-2205-48ba-9f0a-e90ee4dfedf2)
 
@@ -407,21 +429,6 @@ PRAGMA foreign_keys = on;
   ```
 </details>
 
-## About
-This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
-### Motive
-As a self proclaimed space trucker in Star Citizen, there are many features missing from the game that I feel are required to give the best experience to all players taking on the Space trucker role. This program will make profits more readable and later be able to track trends and route efficiency in order to give all the data to each user to create the most profitable routes and cargo types.
-
-
-
-## Current build
-<!-- [![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE) -->
-![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/75224936-9c34-49d3-9ec3-1c9cd6ec8b9e)
-
-![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
-
-
-
 ## Current Functionality
 - User balance
   - Starting balance will be read and stored whenever the value in the spinbox changes
@@ -472,8 +479,11 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 - [x] Created Ship list sort functionality
 - [ ] Create finished run stats page
 - [ ] Add functionality to the database.
+  - [x] Initialize shipList from the database.
 - [ ] Create a login and register page for the program.
 - [ ] Create a window allowing users to see their past routes.
   - [ ] Add functionality to allow users to sort by day using a calendar widget.
   - [ ] Selecting a route will show the user all of the transactions and further details of the route.
+
+
 
