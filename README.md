@@ -478,9 +478,14 @@ PRAGMA foreign_keys = on;
 - [x] Create profit label functionality
 - [x] Created Ship list sort functionality
 - [ ] Create finished run stats page
+- [ ] Create individual buttons for different commodities instead of having the user type in the name
 - [ ] Add functionality to the database.
   - [x] Initialize shipList from the database.
+  - [ ] trade routes get added to DB
+  - [ ] transactions get added to DB
 - [ ] Create a login and register page for the program.
+  - [ ] Adds registered users to the database.
+  - [ ] uses the database to verify login credentials 
 - [ ] Create a window allowing users to see their past routes.
   - [ ] Add functionality to allow users to sort by day using a calendar widget.
   - [ ] Selecting a route will show the user all of the transactions and further details of the route.
