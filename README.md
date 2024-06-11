@@ -1,13 +1,14 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
-- Ship list initialization
-  - The list of ships that is displayed in the combo box in the application is now initialized using data from the SC-Log database 'ships' table.
-  - The data is no longer read from text files and has a more sophisticated and secure method of saving and reinitializing data.
-  - The ship object was also given an ID member variable for future use of other tables and using the ID as a foreign key.
-    - This will make the data much more organized and easier to manipulate rather than using text files.
+  - Login page
+    - User's must now login to the application with a registered account
+    - If a user does not have an account they can register one using an email, username and password.
+      - The new registered account will be saved in the database and the user can now login with their account.
+    - The login class will send the correct user ID to the main application window for further use in organizing data in the data base
   - Benefits
-    - This will overall make our program more efficient because inserting and removing one instance of data requires a simple SQL query rather than having to rewrite the entire text file.
-    - This also makes the code more readable and easier to modify in future use since we no longer need to deal with the jankiness of fstream and data types can more clearly be defined.
+    - This makes the program more secure and will allow user specific data to be stored and organized within the database.
+    - In the future this will allow easy data access from previous trade routes.
+      - The user's ID will allow for more efficient searching method and filter for the data in the database
 
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
@@ -434,8 +435,10 @@ PRAGMA foreign_keys = on;
   - Starting balance will be read and stored whenever the value in the spinbox changes
   - Current balance will also be updated to match the starting balance if the begin route button has not been pressed and the timer has not been started.
 - Ships
-
-  - The program reads from a .txt file in order to initialize the list of ships the user can choose from.
+  - Ship list initialization
+    - The list of ships that is displayed in the combo box in the application is now initialized using data from the SC-Log database 'ships' table.
+    - The data is no longer read from text files and has a more sophisticated and secure method of saving and reinitializing data.
+    - The ship object was also given an ID member variable for future use of other tables and using the ID as a foreign key.
   - The list of ships will be displayed to the user using a combo box.
   - The combo box selection will be used to manipulate the list and make sure the correct ship is selected for the trade run.
   - The list of ships can be sorted in ascending order by either their name or cargo capacity.
@@ -483,9 +486,10 @@ PRAGMA foreign_keys = on;
   - [x] Initialize shipList from the database.
   - [ ] trade routes get added to DB
   - [ ] transactions get added to DB
-- [ ] Create a login and register page for the program.
-  - [ ] Adds registered users to the database.
-  - [ ] uses the database to verify login credentials 
+- [x] Create a login and register page for the program.
+  - [x] Adds registered users to the database.
+  - [x] uses the database to verify login credentials
+  - [ ] Inform the user to register an account if the username used to login is not found in the database
 - [ ] Create a window allowing users to see their past routes.
   - [ ] Add functionality to allow users to sort by day using a calendar widget.
   - [ ] Selecting a route will show the user all of the transactions and further details of the route.
