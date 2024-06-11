@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         sellalldialog.h sellalldialog.cpp sellalldialog.ui
         shipList.h shipList.cpp
         selldialog.h selldialog.cpp selldialog.ui
+        loginwidget.cpp loginwidget.h loginwidget.ui registerdialog.cpp registerdialog.h registerdialog.ui
 
 
 

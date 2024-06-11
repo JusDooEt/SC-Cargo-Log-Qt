@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginWidget</class>
+ <widget class="QWidget" name="LoginWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>446</width>
+    <height>369</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>LoginWidget</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+	color: rgb(255, 255, 255);
+	background-color: rgba(3, 0, 38,150);
+	font: &quot;Yu Gothic UI Semibold&quot;;
+}
+
+QComboBox
+{
+	color: rgb(85, 255, 255);
+	border: 2px solid white;
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0);
+	border-style: outset;
+}
+
+QPushButton
+{
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 6px;
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QPushButton:Disabled
+{
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 6px;
+	border-color: rgb(181, 181, 181);
+	
+}
+
+QPushButton:hover
+{
+	border: 4px solid white;
+}
+
+QPushButton:pressed
+{
+	background-color: rgba(255, 255, 255, 150);
+	border: 5px solid white;
+}
+
+QLabel
+{
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QLineEdit
+{
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QDoubleSpinBox
+{
+	border: 3px solid white;
+	border-radius: 8px;
+	background-color: rgba(3, 0, 38,100);
+}
+QSpinBox
+{
+	border: 3px solid white;
+	border-radius: 8px;
+	background-color: rgba(3, 0, 38,100);
+}
+
+QLineEdit
+{
+	border: 2px solid white;
+	border-radius: 8px;
+}
+
+QProgressBar
+{
+	border: 2px solid white;
+	border-radius: 8px;
+	border-style: outset;
+	
+	background-color: rgba(3, 0, 38,150)
+}
+
+QProgressBar::chunk
+{
+	border: 2px solid rgb(255, 255, 255);
+	border-radius: px;
+	background-color: rgb(255, 255, 255);
+	width: 10px;
+	margin: 1px;
+
+
+}
+
+QListWidget::item
+{
+	color: rgb(85, 255, 255);
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Ignored</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>142</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>122</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="title_label">
+       <property name="font">
+        <font>
+         <family>Microsoft Uighur</family>
+         <pointsize>26</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+         <underline>false</underline>
+        </font>
+       </property>
+       <property name="text">
+        <string>MANIFEST</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="username_label">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Username:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="password_label">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Password: </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLineEdit" name="username_lineEdit"/>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="password_lineEdit">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="register_pushButton">
+         <property name="text">
+          <string>Register</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="login_pushButton">
+         <property name="text">
+          <string>Login</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>121</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>141</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
