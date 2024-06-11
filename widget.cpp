@@ -1,6 +1,6 @@
 #include "widget.h"
 #include "./ui_widget.h"
-
+#include "qsqlquery.h"
 
 //Constructor
 Widget::Widget(QWidget *parent, const int userID)
@@ -163,6 +163,8 @@ void Widget::on_startBalDoubleSpinBox_valueChanged(double arg1)
 
 void Widget::on_beginButton_clicked()
 {
+    QString queryStr;
+    QSqlQuery queryInsertRoute(DBConnection);
     // Ui assest formatting
     ui->endButton->setDisabled(false);
 
@@ -189,6 +191,12 @@ void Widget::on_beginButton_clicked()
 
     // start the stop watch
     timer->start(1000);
+    queryStr = "INSERT INTO routes (userID, shipID, startingBalance, date, time) VALUES('"
+               + QString::number(USER_ID) + "', '"
+               + QString::number(shipList.getShip(shipIndex)->id) + "', '"
+               + QString::number(startingBal) + "', '"
+               + QDate::currentDate().toString() + "', '"
+               + QTime::currentTime().toString() + "');";
 
 }
 
