@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegisterDialog</class>
+ <widget class="QDialog" name="RegisterDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>309</width>
+    <height>377</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+	color: rgb(255, 255, 255);
+	background-color: rgba(3, 0, 38,150);
+	font: &quot;Yu Gothic UI Semibold&quot;;
+}
+
+QComboBox
+{
+	color: rgb(85, 255, 255);
+	border: 2px solid white;
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0);
+	border-style: outset;
+}
+
+QPushButton
+{
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 6px;
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QPushButton:Disabled
+{
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 6px;
+	border-color: rgb(181, 181, 181);
+	
+}
+
+QPushButton:hover
+{
+	border: 4px solid white;
+}
+
+QPushButton:pressed
+{
+	background-color: rgba(255, 255, 255, 150);
+	border: 5px solid white;
+}
+
+QLabel
+{
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QLineEdit
+{
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QDoubleSpinBox
+{
+	border: 3px solid white;
+	border-radius: 8px;
+	background-color: rgba(3, 0, 38,100);
+}
+QSpinBox
+{
+	border: 3px solid white;
+	border-radius: 8px;
+	background-color: rgba(3, 0, 38,100);
+}
+
+QLineEdit
+{
+	border: 2px solid white;
+	border-radius: 8px;
+}
+
+QProgressBar
+{
+	border: 2px solid white;
+	border-radius: 8px;
+	border-style: outset;
+	
+	background-color: rgba(3, 0, 38,150)
+}
+
+QProgressBar::chunk
+{
+	border: 2px solid rgb(255, 255, 255);
+	border-radius: px;
+	background-color: rgb(255, 255, 255);
+	width: 10px;
+	margin: 1px;
+
+
+}
+
+QListWidget::item
+{
+	color: rgb(85, 255, 255);
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <item>
+    <widget class="QLabel" name="registerLabel">
+     <property name="font">
+      <font>
+       <family>Microsoft Uighur</family>
+       <pointsize>24</pointsize>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Register</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="nameLabel">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Username: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="emailLabel">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Email: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="passLabel">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Password: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="confirmPassLabel">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Confirm Password: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="usernameLineEdit"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="emailLineEdit"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="passwordLineEdit">
+         <property name="font">
+          <font>
+           <italic>false</italic>
+           <bold>false</bold>
+           <strikeout>false</strikeout>
+           <kerning>false</kerning>
+          </font>
+         </property>
+         <property name="inputMask">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::PasswordEchoOnEdit</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="confirmPassLineEdit">
+         <property name="echoMode">
+          <enum>QLineEdit::PasswordEchoOnEdit</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="userVerifyLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Username not available</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="verifyEmailLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Valid Email</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="passVerifyLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Passwords do not match</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="registerButton">
+       <property name="text">
+        <string>Register</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

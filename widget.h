@@ -24,11 +24,12 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
+    Widget(QWidget *parent, const int userID);
     ~Widget();
 
 
 private:
+    const int USER_ID;
 
     QSqlDatabase  DBConnection;
     Ui::Widget*         ui;

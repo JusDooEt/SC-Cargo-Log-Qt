@@ -3,12 +3,15 @@
 
 
 //Constructor
-Widget::Widget(QWidget *parent)
+Widget::Widget(QWidget *parent, const int userID)
     : QWidget(parent)
     , ui(new Ui::Widget)
+    , USER_ID(userID)
 {
     ui->setupUi(this);
 
+    // Debug USER_ID
+    qDebug() << "USER_ID = " << USER_ID;
     // Set up load up state
     ui->cargoNamelineEdit->setDisabled(true);
     ui->priceDoubleSpinBox->setDisabled(true);
@@ -187,15 +190,6 @@ void Widget::on_beginButton_clicked()
     // start the stop watch
     timer->start(1000);
 
-    // File.setFileName("CargoLog.txt");
-    // if (!File.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
-    // {
-    //     qDebug() << "open error" << File.OpenError;
-    //     return;
-    // }
-
-    // stream.setDevice(&File);
-    // stream << "Ship Name: " << shipList.getName(shipIndex);
 }
 
 
