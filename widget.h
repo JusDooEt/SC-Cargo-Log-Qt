@@ -47,6 +47,7 @@ private:
     bool                runStopWatch;
     bool                sellAll;
     bool                sellButtonEnabled;
+    int                 routeID;
     int                 shipIndex;
     int                 cargoIndex;
     int                 hr;
