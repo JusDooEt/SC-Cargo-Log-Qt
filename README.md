@@ -2,18 +2,25 @@
 ## Newest Update
   - Data from cargo routes will now be tracked and stored in the SQLite database.
     - Each trade route will have a unique integer ID labeled as 'routeID'
+      
     - All trade routes will be stored along with the associated unique userID.
       - The userID is determined from the login page and sent to the main window.
       - This will allow a history of routes to be accessed for each unique user.
+    
     - A new route will be inserted into the database when the 'Begin Run' button is clicked.
-      - The date and time will be logged and saved to the created route.
-      - The user's starting balance will be saved to the created route.
-      - The shipID is saved to the created route.
+      - The following values will be inserted into the route
+        - User ID
+        - Ship ID
+        - Starting Balance
+        - Current Date
+        - Current Time
+    
     - The current route will be updated when the 'End Run' button is clicked.
-      - The following values will be inserted into the route row
+      - The following values will be inserted into the route
         - Final Balance
         - Profit
         - Duration
+        
   - Benefits
     - Updating the database for each trade route per user will allow use to implement features to track more in depth details about the trade run.
     - The next goal is to save individual transactions to a specified trade route and allow the user to open a window containing an organized list of their trading history.
