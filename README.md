@@ -1,14 +1,23 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
-  - Login page
-    - User's must now login to the application with a registered account
-    - If a user does not have an account they can register one using an email, username and password.
-      - The new registered account will be saved in the database and the user can now login with their account.
-    - The login class will send the correct user ID to the main application window for further use in organizing data in the data base
+  - Data from cargo routes will now be tracked and stored in the SQLite database.
+    - Each trade route will have a unique integer ID labeled as 'routeID'
+    - All trade routes will be stored along with the associated unique userID.
+      - The userID is determined from the login page and sent to the main window.
+      - This will allow a history of routes to be accessed for each unique user.
+    - A new route will be inserted into the database when the 'Begin Run' button is clicked.
+      - The date and time will be logged and saved to the created route.
+      - The user's starting balance will be saved to the created route.
+      - The shipID is saved to the created route.
+    - The current route will be updated when the 'End Run' button is clicked.
+      - The following values will be inserted into the route row
+        - Final Balance
+        - Profit
+        - Duration
   - Benefits
-    - This makes the program more secure and will allow user specific data to be stored and organized within the database.
-    - In the future this will allow easy data access from previous trade routes.
-      - The user's ID will allow for more efficient searching method and filter for the data in the database
+    - Updating the database for each trade route per user will allow use to implement features to track more in depth details about the trade run.
+    - The next goal is to save individual transactions to a specified trade route and allow the user to open a window containing an organized list of their trading history.
+    - Storing transaction details will also allow for a more accurate price estimate per commodity. When a user makes a transaction the default commodity value can be updated to match the most recent price it was bought or sold at. This would also pave the way for stock and price analysis and prediction features in the future.
 
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
@@ -431,6 +440,11 @@ PRAGMA foreign_keys = on;
 </details>
 
 ## Current Functionality
+  - Login page
+    - User's must now login to the application with a registered account
+    - If a user does not have an account they can register one using an email, username and password.
+      - The new registered account will be saved in the database and the user can now login with their account.
+    - The login class will send the correct user ID to the main application window for further use in organizing data in the data base
 - User balance
   - Starting balance will be read and stored whenever the value in the spinbox changes
   - Current balance will also be updated to match the starting balance if the begin route button has not been pressed and the timer has not been started.
@@ -484,7 +498,7 @@ PRAGMA foreign_keys = on;
 - [ ] Create individual buttons for different commodities instead of having the user type in the name
 - [ ] Add functionality to the database.
   - [x] Initialize shipList from the database.
-  - [ ] trade routes get added to DB
+  - [x] trade routes get added to DB
   - [ ] transactions get added to DB
 - [x] Create a login and register page for the program.
   - [x] Adds registered users to the database.
