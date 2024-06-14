@@ -57,6 +57,7 @@ Widget::Widget(QWidget *parent, const int userID)
     cargoBuyError = nullptr;
     sellAllDialog = nullptr;
     sellDialog = nullptr;
+    routeID = -1;
 
     hr = 00;
     min = 00;
@@ -198,11 +199,36 @@ void Widget::on_beginButton_clicked()
                + QDate::currentDate().toString() + "', '"
                + QTime::currentTime().toString() + "');";
 
+    if(queryInsertRoute.prepare(queryStr))
+    {
+        if (queryInsertRoute.exec())
+        {
+            routeID = queryInsertRoute.lastInsertId().toInt();
+            qDebug() << "routeID: " << routeID;
+            qDebug() << "UserID: " << USER_ID;
+            qDebug() << "shipID: " << shipList.getShip(shipIndex)->id;
+            qDebug() << "startingBal: " << startingBal;
+            qDebug() << "Date: : " << QDate::currentDate();
+            qDebug() << "Time: : " << QTime::currentTime();
+            qDebug() << "Registed in the database";
+        }
+        else
+        {
+            qDebug() << "Failed to execute query";
+        }
+    }
+    else
+    {
+        qDebug() << "Failed to prepare query";
+    }
+
 }
 
 
 void Widget::on_endButton_clicked()
 {
+    QString queryStr;
+    QSqlQuery queryUpdateRoute(DBConnection);
     ui->beginButton->setDisabled(false);
     ui->startBalDoubleSpinBox->setDisabled(false);
     ui->beginButton->setDisabled(false);
@@ -218,6 +244,30 @@ void Widget::on_endButton_clicked()
     startingBal = currentBal;
     ui->startBalDoubleSpinBox->setValue(startingBal);
     //File.close();
+
+    queryStr = "UPDATE routes SET finalBalance = '" + QString::number(currentBal) +
+               "', profit = '" + QString::number(profit) +
+               "', duration = '" + QString::number(hr) + ":" + QString::number(min) + ":" + QString::number(sec) +
+               "' WHERE routeID = '" + QString::number(routeID) + "';";
+
+    if(queryUpdateRoute.prepare(queryStr))
+    {
+        if (queryUpdateRoute.exec())
+        {
+            qDebug() << "finalBalance: " << currentBal;
+            qDebug() << "profit: " << profit;
+            qDebug() << "duration: " << QString::number(hr) + ":" + QString::number(min) + ":" + QString::number(sec);
+            qDebug() << "Updated in the database";
+        }
+        else
+        {
+            qDebug() << "Failed to execute query";
+        }
+    }
+    else
+    {
+        qDebug() << "Failed to prepare query";
+    }
 }
 
 
@@ -407,7 +457,8 @@ void Widget::cargoSellAccepted()
 
     //Edit Profit label
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
-
+    currentBal += cargoSellPtr->value;
+    ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
     //reset cargo input compenents
     ui->cargoNamelineEdit->clear();
     ui->amountSpinBox->setValue(0);
