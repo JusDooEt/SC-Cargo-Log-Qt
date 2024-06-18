@@ -126,6 +126,44 @@ void Widget::loadShipCombo()
     }
 }
 
+void Widget::addTransaction(Cargo *item, int type) // If type == 0 item was bought. 1 means it was sold
+{
+
+    QString queryStr;
+    QSqlQuery queryInsertTrans(DBConnection);
+    qDebug() << 1;
+    queryStr = "INSERT INTO transactions (routeID, name, quantity, price, time, sold) VALUES('"
+               + QString::number(routeID) + "', '"
+               + item->name + "', '"
+               + QString::number(item->amount) + "', '"
+               + QString::number(item->pricePerUnit) + "', '"
+               + QTime::currentTime().toString() + "', '"
+               + QString::number(type) + "');";
+    qDebug() << 2;
+    if(queryInsertTrans.prepare(queryStr))
+    {
+        qDebug() << 3;
+        if (queryInsertTrans.exec())
+        {
+            qDebug() << "routeID: " << routeID;
+            qDebug() << "name: " << item->name;
+            qDebug() << "quantity: " << item->amount;
+            qDebug() << "price: " << item->pricePerUnit;
+            qDebug() << "time: : " << QTime::currentTime();
+            qDebug() << "sold: : " << type;
+            qDebug() << "Registed in the database";
+        }
+        else
+        {
+            qDebug() << "Failed to execute query";
+        }
+    }
+    else
+    {
+        qDebug() << "Failed to prepare query";
+    }
+}
+
 void Widget::updateTimer()
 {
     sec++;
@@ -322,6 +360,8 @@ void Widget::on_buyButton_clicked()
         //     ui->sellButton->setEnabled(true);
         if(!ui->sellAllButton->isEnabled())
             ui->sellAllButton->setEnabled(true);
+
+        addTransaction(&cargoHold.back(), 0);
     }
 
 }
@@ -464,6 +504,8 @@ void Widget::cargoSellAccepted()
     ui->amountSpinBox->setValue(0);
     ui->priceDoubleSpinBox->setValue(0);
     ui->sellButton->setDisabled(true);
+
+    addTransaction(cargoSellPtr, 1);
 }
 
 void Widget::updateShipStorage()
