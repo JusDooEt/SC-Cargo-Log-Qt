@@ -60,7 +60,7 @@ private:
 
 
     void loadShipCombo();
-
+    void addTransaction(Cargo* item, int type);
 signals:
     void shipChanged(int index);
     void shipStorageChanged();
