@@ -1,36 +1,26 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
-### Data from cargo routes will now be tracked and stored in the SQLite database.
-- Each trade route will have a unique integer ID labeled as 'routeID'
-  
-- All trade routes will be stored along with the associated unique userID.
-  - The userID is determined from the login page and sent to the main window.
-  - This will allow a history of routes to be accessed for each unique user.
-
-- A new route will be inserted into the database when the 'Begin Run' button is clicked.
-  - The following values will be inserted into the route
-    - User ID
-    - Ship ID
-    - Starting Balance
-    - Current Date
-    - Current Time
-
-- The current route will be updated when the 'End Run' button is clicked.
-  - The following values will be inserted into the route
-    - Final Balance
-    - Profit
-    - Duration
+### Individual buy and sell transactions are now store in the database
+- Every transaction will have a unique integer transactionID.
+  - This ID will automatically increment for each transaction.
+- Each transaction will have a foreign key linking said transaction to a trade route.
+  - The trade route ID number, routeID, will be stored after the user clicks the 'Begin Run' button and creates a new trade route instance.
+- The following values are tracked and stored for each transaction.
+  - routeID
+  - name
+  - quantity
+  - price
+  - time
+  - sold
+    - If sold == 0 this transaction represents a purchase. If it does not, the transaction represents a sale. 
         
 ### Benefits
-- Updating the database for each trade route per user will allow use to implement features to track more in depth details about the trade run.
-- The next goal is to save individual transactions to a specified trade route and allow the user to open a window containing an organized list of their trading history.
-- Storing transaction details will also allow for a more accurate price estimate per commodity. When a user makes a transaction the default commodity value can be updated to match the most recent price it was bought or sold at. This would also pave the way for stock and price analysis and prediction features in the future.
-   
-### Fixes
-- Fixed an issue with selling individual cargo types
-  - Current Balance is now be properly updated and displayed.
-  - Starting Balance is now properly upated at the end of a cargo run.
-  - The correct final balance is stored.
+- Storing the data of individual transactions will allow the program to implement features to allow the user to access detailed statistics and data of their trade history within the app.
+  - The routeID stored with each transaction will allow the program to separate and organize transactions to their specific route and the route to the specific user.
+  - This allows the program to create new user specific statistics and have more detailed information on user activity.
+- A new window can be made allowing a user to view a history of trade routes and all of their transactions.
+  - Trade routes should be organized using their dates and times.
+  - Transactions should be used to calculate route statistics like profit rates, most valuable item, etc. 
 
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
@@ -502,6 +492,24 @@ PRAGMA foreign_keys = on;
   - The Quick Sort algorithm was used to sort the ships.
     - The algorithm was modified in order to work with the Ship type object.
     - The algorithm also allows the programmer to choose which ship member to sort by using an enum flag, either 'CARGO' or 'NAME'.
+### Data from cargo routes stored in the SQLite database.
+- Each trade route will have a unique integer ID labeled as 'routeID'  
+- All trade routes will be stored along with the associated unique userID.
+  - The userID is determined from the login page and sent to the main window.
+  - This will allow a history of routes to be accessed for each unique user.
+- A new route will be inserted into the database when the 'Begin Run' button is clicked.
+  - The following values will be inserted into the route
+    - User ID
+    - Ship ID
+    - Starting Balance
+    - Current Date
+    - Current Time
+- The current route will be updated when the 'End Run' button is clicked.
+  - The following values will be inserted into the route
+    - Final Balance
+    - Profit
+    - Duration
+   
 ## To-Do
 - [x] Finish sell all button functionality
 - [x] Finish sell button functionality
@@ -512,7 +520,7 @@ PRAGMA foreign_keys = on;
 - [ ] Add functionality to the database.
   - [x] Initialize shipList from the database.
   - [x] trade routes get added to DB
-  - [ ] transactions get added to DB
+  - [x] transactions get added to DB
 - [x] Create a login and register page for the program.
   - [x] Adds registered users to the database.
   - [x] uses the database to verify login credentials
@@ -520,6 +528,8 @@ PRAGMA foreign_keys = on;
 - [ ] Create a window allowing users to see their past routes.
   - [ ] Add functionality to allow users to sort by day using a calendar widget.
   - [ ] Selecting a route will show the user all of the transactions and further details of the route.
+
+
 
 
 
