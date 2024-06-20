@@ -1174,26 +1174,6 @@ border-radius: 2px;</string>
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="sellAllButton">
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">alternate-background-color: rgb(0, 0, 255);</string>
-           </property>
-           <property name="text">
-            <string> SELL ALL</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item>
@@ -1305,6 +1285,13 @@ border-radius: 2px;</string>
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="tradeHistoryButton">
+         <property name="text">
+          <string>Trade History</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

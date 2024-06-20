@@ -12,6 +12,7 @@
 #include "sellalldialog.h"
 #include "shipList.h"
 #include "selldialog.h"
+#include "log.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -88,5 +89,6 @@ private slots:
     void on_cargoSortButton_clicked();
     void on_shipComboBox_activated(int index);
     void on_nameSortButton_clicked();
+    void on_tradeHistoryButton_clicked();
 };
 #endif // WIDGET_H

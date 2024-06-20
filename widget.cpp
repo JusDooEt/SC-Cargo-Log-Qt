@@ -18,7 +18,7 @@ Widget::Widget(QWidget *parent, const int userID)
     ui->amountSpinBox->setDisabled(true);
     ui->buyButton->setDisabled(true);
     ui->sellButton->setDisabled(true);
-    ui->sellAllButton->setDisabled(true);
+    //ui->sellAllButton->setDisabled(true);
     ui->endButton->setDisabled(true);
     ui->nameSortButton->setDisabled(true);
 
@@ -103,7 +103,7 @@ void Widget::profitSent(const double sentProfit)
     ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
     ui->editValueLabel->setText(QString("%1 aUEC").arg(totalValue, 0, 'f', 2));
-    ui->sellAllButton->setDisabled(true);
+    //ui->sellAllButton->setDisabled(true);
     ui->cargoHoldListWidget->clear();
     ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
     //reset cargoHoldProgressBar
@@ -214,6 +214,7 @@ void Widget::on_beginButton_clicked()
     ui->amountSpinBox->setDisabled(false);
     ui->buyButton->setDisabled(false);
     ui->shipComboBox->setDisabled(true);
+    ui->tradeHistoryButton->setDisabled(true);
 
     // reset clock values;
     hr = 0;
@@ -276,6 +277,7 @@ void Widget::on_endButton_clicked()
     ui->amountSpinBox->setDisabled(true);
     ui->buyButton->setDisabled(true);
     ui->endButton->setDisabled(true);
+    ui->tradeHistoryButton->setEnabled(true);
 
     // stop the stop watch
     timer->stop();
@@ -358,8 +360,8 @@ void Widget::on_buyButton_clicked()
         ui->amountSpinBox->setMaximum((shipList.getCargoCap(shipIndex) - shipList.getCurrentCap(shipIndex)) * 100);
         // if(!ui->sellButton->isEnabled())
         //     ui->sellButton->setEnabled(true);
-        if(!ui->sellAllButton->isEnabled())
-            ui->sellAllButton->setEnabled(true);
+        // if(!ui->sellAllButton->isEnabled())
+        //     ui->sellAllButton->setEnabled(true);
 
         addTransaction(&cargoHold.back(), 0);
     }
@@ -578,5 +580,12 @@ void Widget::on_nameSortButton_clicked()
 
     ui->shipComboBox->setEnabled(true);
     setEnabled(true);
+}
+
+
+void Widget::on_tradeHistoryButton_clicked()
+{
+    Log* logWindow = new Log(nullptr, DBConnection, USER_ID);
+    logWindow->show();
 }
 
