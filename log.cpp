@@ -127,7 +127,7 @@ void Log::on_routeListWidget_itemClicked(QListWidgetItem *item)
                               "Item name: " + queryFindTrans.value("name").toString() + '\n' +
                               "Price Per Unit: " + queryFindTrans.value("price").toString() + '\n' +
                               "Quantity: " + queryFindTrans.value("quantity").toString() + '\n' +
-                              (queryFindTrans.value("sold").toInt() ? "Purchased" : "Sold") + '\n';
+                              (!queryFindTrans.value("sold").toInt() ? "Purchased" : "Sold") + '\n';
                 ui->routeDetailsTextEdit->append(textEditStr);
             }
         }
