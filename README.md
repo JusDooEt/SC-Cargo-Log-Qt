@@ -1,26 +1,22 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
-### Individual buy and sell transactions are now store in the database
-- Every transaction will have a unique integer transactionID.
-  - This ID will automatically increment for each transaction.
-- Each transaction will have a foreign key linking said transaction to a trade route.
-  - The trade route ID number, routeID, will be stored after the user clicks the 'Begin Run' button and creates a new trade route instance.
-- The following values are tracked and stored for each transaction.
-  - routeID
-  - name
-  - quantity
-  - price
-  - time
-  - sold
-    - If sold == 0 this transaction represents a purchase. If it does not, the transaction represents a sale. 
-        
+
+### [FEATURE] A new window has been added for the user to view their trade history
+- A button in the bottom left of the main window titled 'Trade History' will open a new window when clicked.
+  - This button will be disabled during an active trading run to minimize searching for null values
+- The new window contains
+  - User interactable calendar
+    - This calendar defaults to the current date when the window is created.
+    - When the user selects a new date the program will search the database for any routes matching the date selected and the user's ID
+    - If any routes are found they are displayed in the Item window.
+  - Item window for routes
+    - If a user clicks an item the program will search for transactions containing the route ID associated with the item and display it in the routes details text box.
+  - Text box for route details
+
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/b53b804c-54e4-44b5-bb18-6543a977cc8e)       
 ### Benefits
-- Storing the data of individual transactions will allow the program to implement features to allow the user to access detailed statistics and data of their trade history within the app.
-  - The routeID stored with each transaction will allow the program to separate and organize transactions to their specific route and the route to the specific user.
-  - This allows the program to create new user specific statistics and have more detailed information on user activity.
-- A new window can be made allowing a user to view a history of trade routes and all of their transactions.
-  - Trade routes should be organized using their dates and times.
-  - Transactions should be used to calculate route statistics like profit rates, most valuable item, etc. 
+- This allows for this program to be reusable and able to store data gathered from the player.
+- The user's will be able to see a full history of their trade runs recorded by this app.
 
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
@@ -509,6 +505,20 @@ PRAGMA foreign_keys = on;
     - Final Balance
     - Profit
     - Duration
+      
+### Individual buy and sell transactions are now store in the database
+- Every transaction will have a unique integer transactionID.
+  - This ID will automatically increment for each transaction.
+- Each transaction will have a foreign key linking said transaction to a trade route.
+  - The trade route ID number, routeID, will be stored after the user clicks the 'Begin Run' button and creates a new trade route instance.
+- The following values are tracked and stored for each transaction.
+  - routeID
+  - name
+  - quantity
+  - price
+  - time
+  - sold
+    - If sold == 0 this transaction represents a purchase. If it does not, the transaction represents a sale. 
    
 ## To-Do
 - [x] Finish sell all button functionality
@@ -528,8 +538,3 @@ PRAGMA foreign_keys = on;
 - [ ] Create a window allowing users to see their past routes.
   - [ ] Add functionality to allow users to sort by day using a calendar widget.
   - [ ] Selecting a route will show the user all of the transactions and further details of the route.
-
-
-
-
-
