@@ -3,11 +3,11 @@
 
 ### [FEATURE] A new window has been added for the user to view their trade history
 - A button in the bottom left of the main window titled 'Trade History' will open a new window when clicked.
-  - This button will be disabled during an active trading run to minimize searching for null values
+  - This button will be disabled during an active trading run to minimize searching for null values.
 - The new window contains
   - User interactable calendar
     - This calendar defaults to the current date when the window is created.
-    - When the user selects a new date the program will search the database for any routes matching the date selected and the user's ID
+    - When the user selects a new date the program will search the database for any routes matching the date selected and the user's ID.
     - If any routes are found they are displayed in the Item window.
   - Item window for routes
     - If a user clicks an item the program will search for transactions containing the route ID associated with the item and display it in the routes details text box.
