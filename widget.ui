@@ -480,7 +480,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>Manifest</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
