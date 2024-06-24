@@ -1,22 +1,27 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/0a7a79cb-af8b-4bed-a705-77c682119a52)
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/ddec8190-0576-4411-bd82-ffa9ad09fa0a)
 
-### [FEATURE] A new window has been added for the user to view their trade history
-- A button in the bottom left of the main window titled 'Trade History' will open a new window when clicked.
-  - This button will be disabled during an active trading run to minimize searching for null values.
-- The new window contains
-  - User interactable calendar
-    - This calendar defaults to the current date when the window is created.
-    - When the user selects a new date the program will search the database for any routes matching the date selected and the user's ID.
-    - If any routes are found they are displayed in the Item window.
-  - Item window for routes
-    - If a user clicks an item the program will search for transactions containing the route ID associated with the item and display it in the routes details text box.
-  - Text box for route details
+### Updates
+- The calendar previously located in the log widget was removed and made into its own independent object.
+  - This change provides more space to display information about trade routes since the full calendar widget does not need to be constantly visible
+  - A button displaying the date selected has been added to the 'Trade Log' window that will open a new dialog window with just a calendar and 'cancel' and 'accept' buttons when clicked.
+    - If the user clicks the accept button, whatever date is selected will be sent back to the 'Trade Log' window and the routes for the selected date will be updated appropriately.
 
-![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/b53b804c-54e4-44b5-bb18-6543a977cc8e)       
-### Benefits
-- This allows for this program to be reusable and able to store data gathered from the player.
-- The user's will be able to see a full history of their trade runs recorded by this app.
+### Fixes
+- Changed the display format for a route's 'Starting Balance'.
+  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
+- Changed the display format for a route's 'Final Balance'.
+  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
+- Changed the display format for a route's 'Profit'.
+  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
+- Changed the display format for a transaction's 'Price Per Unit'.
+  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
+- Changed the display format for a transaction's 'Amount'.
+  - This value now has 'UNITS' as its suffix.
+- 'PURCHASED' and 'SOLD' text is now capitalized to make it more clear to the user.
+- Fixed an issue where clicking on routes duplicated the route details text instead of clearing and refreshing it.
 
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
@@ -506,7 +511,7 @@ PRAGMA foreign_keys = on;
     - Profit
     - Duration
       
-### Individual buy and sell transactions are now store in the database
+### Individual buy and sell transactions are now stored in the database
 - Every transaction will have a unique integer transactionID.
   - This ID will automatically increment for each transaction.
 - Each transaction will have a foreign key linking said transaction to a trade route.
@@ -519,7 +524,15 @@ PRAGMA foreign_keys = on;
   - time
   - sold
     - If sold == 0 this transaction represents a purchase. If it does not, the transaction represents a sale. 
-   
+
+### A window for the user to view their trade history
+- A button in the bottom left of the main window titled 'Trade Log' will open a new window when clicked.
+  - This button will be disabled during an active trading run to minimize searching for null values.
+- The new window contains
+  - A push button to change the selected date
+  - Item window for routes
+    - If a user clicks an item the program will search for transactions containing the route ID associated with the item and display it in the routes details text box.
+  - Text box for route details
 ## To-Do
 - [x] Finish sell all button functionality
 - [x] Finish sell button functionality
@@ -527,7 +540,7 @@ PRAGMA foreign_keys = on;
 - [x] Created Ship list sort functionality
 - [ ] Create finished run stats page
 - [ ] Create individual buttons for different commodities instead of having the user type in the name
-- [ ] Add functionality to the database.
+- [x] Add functionality to the database.
   - [x] Initialize shipList from the database.
   - [x] trade routes get added to DB
   - [x] transactions get added to DB
@@ -535,6 +548,10 @@ PRAGMA foreign_keys = on;
   - [x] Adds registered users to the database.
   - [x] uses the database to verify login credentials
   - [ ] Inform the user to register an account if the username used to login is not found in the database
-- [ ] Create a window allowing users to see their past routes.
-  - [ ] Add functionality to allow users to sort by day using a calendar widget.
-  - [ ] Selecting a route will show the user all of the transactions and further details of the route.
+- [x] Create a window allowing users to see their past routes.
+  - [x] Add functionality to allow users to sort by day using a calendar widget.
+  - [x] Selecting a route will show the user all of the transactions and further details of the route.
+- [ ] Add Secuirty features to login
+
+
+
