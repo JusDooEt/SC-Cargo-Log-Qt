@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QListWidget>
 #include "shipList.h"
+#include "logcalendar.h"
 
 namespace Ui {
 class Log;
@@ -27,15 +28,18 @@ private:
 
     QDate date;
     QList<int> routeIDs;
+    LogCalendar* calendar;
 
 private slots:
     void onRefresh(QDate targetDate);
 
-    void on_calendarWidget_selectionChanged();
+    //void on_calendarWidget_selectionChanged();
 
     //void on_routeListWidget_itemActivated(QListWidgetItem *item);
 
     void on_routeListWidget_itemClicked(QListWidgetItem *item);
+
+    void on_dateButton_clicked();
 
 signals:
 
