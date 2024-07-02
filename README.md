@@ -1,13 +1,25 @@
 # SC-Cargo-Log w/ QtCreator
 ## Newest Update
-![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/0a7a79cb-af8b-4bed-a705-77c682119a52)
-![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/ddec8190-0576-4411-bd82-ffa9ad09fa0a)
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/8217df8e-4b09-48ad-ad12-017a1180af62)
 
-### Updates
-- The calendar previously located in the log widget was removed and made into its own independent object.
-  - This change provides more space to display information about trade routes since the full calendar widget does not need to be constantly visible
-  - A button displaying the date selected has been added to the 'Trade Log' window that will open a new dialog window with just a calendar and 'cancel' and 'accept' buttons when clicked.
-    - If the user clicks the accept button, whatever date is selected will be sent back to the 'Trade Log' window and the routes for the selected date will be updated appropriately.
+### [Feature] End of run stats page has been added.
+- This window will appear whenever the user clicks the 'Finish Run' button.
+- This is meant to give more details to the user about the most recently completed trade run.
+- The window will show values for the following...
+  - ShipID
+  - Ship Capacity
+  - Run Duration
+  - Cargo Purchased (SCU)
+  - Starting Balance (aUEC)
+  - Amount Spent (aUEC)
+  - Amount Received (aUEC)
+  - Profit (aUEC)
+
+### Future Additions
+- Values for the following...
+  - Profit per minute
+  - Most Profitable Item
+  - Average Profit per Sale of the most profitable item
 
 ### Fixes
 - Changed the display format for a route's 'Starting Balance'.
@@ -33,7 +45,8 @@ As a self proclaimed space trucker in Star Citizen, there are many features miss
 ## Current build
 <!-- [![res/images/build-imageV1.PNG](https://github.com/JusDooEt/SC-Cargo-Log-Qt/blob/master/res/images/build-imageV1-2.PNG)](https://www.youtube.com/watch?v=5nPhlwM65tE) -->
 ![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/75224936-9c34-49d3-9ec3-1c9cd6ec8b9e)
-
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/0a7a79cb-af8b-4bed-a705-77c682119a52)
+![image](https://github.com/JusDooEt/SC-Cargo-Log-Qt/assets/152052216/ddec8190-0576-4411-bd82-ffa9ad09fa0a)
 ![gif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXh0bGwxNGEyeWFtcHI1bDNtb3ZtbjRvOXR3aGFsZXMzZ2xuZ3c1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rCrJ0tjiDNU8UVZgLW/giphy.gif)
 
 ## SQLite Database (SC-Log.db)
@@ -528,8 +541,9 @@ PRAGMA foreign_keys = on;
 ### A window for the user to view their trade history
 - A button in the bottom left of the main window titled 'Trade Log' will open a new window when clicked.
   - This button will be disabled during an active trading run to minimize searching for null values.
-- The new window contains
-  - A push button to change the selected date
+- The window contains
+  - A button displaying the date selected in 'Trade Log' window that will open a new dialog window with just a calendar and 'cancel' and 'accept' buttons when clicked.
+    - If the user clicks the accept button, whatever date is selected will be sent back to the 'Trade Log' window and the routes for the selected date will be updated appropriately.
   - Item window for routes
     - If a user clicks an item the program will search for transactions containing the route ID associated with the item and display it in the routes details text box.
   - Text box for route details
@@ -551,7 +565,4 @@ PRAGMA foreign_keys = on;
 - [x] Create a window allowing users to see their past routes.
   - [x] Add functionality to allow users to sort by day using a calendar widget.
   - [x] Selecting a route will show the user all of the transactions and further details of the route.
-- [ ] Add Secuirty features to login
-
-
-
+- [ ] Add Security features to login
