@@ -21,20 +21,6 @@
   - Most Profitable Item
   - Average Profit per Sale of the most profitable item
 
-### Fixes
-- Changed the display format for a route's 'Starting Balance'.
-  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
-- Changed the display format for a route's 'Final Balance'.
-  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
-- Changed the display format for a route's 'Profit'.
-  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
-- Changed the display format for a transaction's 'Price Per Unit'.
-  - This value has been changed to display as a whole number with two decimal places and with 'aUEC' as its suffix instead of scientific notation.
-- Changed the display format for a transaction's 'Amount'.
-  - This value now has 'UNITS' as its suffix.
-- 'PURCHASED' and 'SOLD' text is now capitalized to make it more clear to the user.
-- Fixed an issue where clicking on routes duplicated the route details text instead of clearing and refreshing it.
-
 ## About
 This program aims to become an application that can be used to aid cargo haulers in the game Star Citizen. The app will log cargo routes and all the materials bought and sold throughout the routes and display the information in a readable way to the user. It will also be able to calculate the total profit earned from the cargo route.
 ### Motive
