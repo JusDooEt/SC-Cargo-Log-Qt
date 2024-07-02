@@ -13,6 +13,7 @@
 #include "shipList.h"
 #include "selldialog.h"
 #include "log.h"
+#include "statscreen.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -54,6 +55,9 @@ private:
     int                 hr;
     int                 min;
     int                 sec;
+    int                 amountPurchased;
+    double              creditsSpent;
+    double              creditsEarned;
     double              totalValue;
     double              sellValue;
     double              profit;
@@ -74,7 +78,7 @@ private slots:
     void on_beginButton_clicked();
     void on_endButton_clicked();
     void on_buyButton_clicked();
-    void on_sellAllButton_clicked();
+    //void on_sellAllButton_clicked();
     //void on_shipComboBox_currentIndexChanged(int index);
     void updateShip(int index);
     //void on_cargoHoldListWidget_currentRowChanged(int currentRow);
