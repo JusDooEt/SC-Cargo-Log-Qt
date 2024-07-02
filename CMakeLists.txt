@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         loginwidget.cpp loginwidget.h loginwidget.ui registerdialog.cpp registerdialog.h registerdialog.ui
         log.h log.cpp log.ui
         logcalendar.h logcalendar.cpp logcalendar.ui
+        statscreen.h statscreen.cpp statscreen.ui
 
 
 

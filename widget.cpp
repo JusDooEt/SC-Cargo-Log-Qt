@@ -58,6 +58,9 @@ Widget::Widget(QWidget *parent, const int userID)
     sellAllDialog = nullptr;
     sellDialog = nullptr;
     routeID = -1;
+    amountPurchased = 0;
+    creditsEarned = 0;
+    creditsSpent = 0;
 
     hr = 00;
     min = 00;
@@ -228,6 +231,9 @@ void Widget::on_beginButton_clicked()
     profit = 0;
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
 
+    amountPurchased = 0;
+    creditsEarned = 0;
+    creditsSpent = 0;
 
     // start the stop watch
     timer->start(1000);
@@ -308,6 +314,12 @@ void Widget::on_endButton_clicked()
     {
         qDebug() << "Failed to prepare query";
     }
+
+    StatScreen* statScreen = new StatScreen(this, DBConnection, routeID);
+    statScreen->sendCargoPurchased(amountPurchased);
+    statScreen->sendAmountRecieved(creditsEarned);
+    statScreen->sendAmountSpent(creditsSpent);
+    statScreen->show();
 }
 
 
@@ -340,6 +352,9 @@ void Widget::on_buyButton_clicked()
 
         cargoHold.push_back(Cargo(name, pricePerUnit, value, amount));
 
+        amountPurchased += ceil(amount/100);
+        creditsSpent += value;
+
         currentBal -= value;
         totalValue += value;
         shipList.setCurrentCap(shipIndex, shipList.getCurrentCap(shipIndex) + (amount / 100));
@@ -371,13 +386,13 @@ void Widget::on_buyButton_clicked()
 
 
 
-void Widget::on_sellAllButton_clicked()
+/*void Widget::on_sellAllButton_clicked()
 {
     sellAllDialog = new SellAllDialog(this, startingBal, currentBal);
     sellAllDialog->show();
 
     connect(sellAllDialog, &SellAllDialog::sendProfit, this, &Widget::profitSent);
-}
+} */
 
 
 
@@ -499,6 +514,7 @@ void Widget::cargoSellAccepted()
 
     //Edit Profit label
     ui->editProfitLabel->setText(QString("%1 aUEC").arg(profit, 0, 'f', 2));
+    creditsEarned += cargoSellPtr->value;
     currentBal += cargoSellPtr->value;
     ui->editCurrentBalanceLabel->setText(QString("%1 aUEC").arg(currentBal, 0, 'f', 2));
     //reset cargo input compenents
